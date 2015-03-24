@@ -1,0 +1,1 @@
+https://www.drupal.org/project/devel - Helper functions for Drupal developers and inquisitive admins

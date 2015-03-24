@@ -1,0 +1,41 @@
+#!/bin/bash
+# add drush cron every hour for user
+# v0.2
+# 03.03.2014
+# 05.12.2014 - fixed duplicate cron add
+# 
+
+root_path="$PWD"
+
+user=$(stat -c '%U' "$root_path")
+
+echo "root: $root_path"
+echo "user: $user"
+
+cron_command="$DRUPAL_SCRIPTS_ROOT/drupal-cron-run $root_path"
+
+# check drush cronjob in cron
+if [ $(crontab -l -u "$user" | grep "$cron_command" | wc -l) != "0" ]; then
+	echo "drush was in cron, exit"
+	exit 1
+fi
+
+# check is drupal directory
+if [ -z "$(drush status | grep "Drupal version")" ]; then
+	echo "$root_path is not drupal root, exit"
+	exit 1
+fi
+
+mins=$(shuf -i 1-59 -n 1)
+
+# tmp cronfile
+tmpfile=$(mktemp -t drupal-cron-add-XXXX)
+crontab -l -u "$user" | sed 's/>/>>/' > "$tmpfile"
+
+cron_line="$mins */3 * * * $cron_command"
+echo "cron_line"
+echo "cron_line" >> "$tmpfile"
+
+cat "$tmpfile" | crontab -u "$user" -
+
+rm "$tmpfile"

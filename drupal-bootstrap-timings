@@ -1,0 +1,37 @@
+#!/usr/bin/env php
+<?php
+$root_path = getcwd();
+$br = "\n";
+
+define('DRUPAL_ROOT', $root_path);
+
+$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+@require_once DRUPAL_ROOT . '/includes/bootstrap.inc';
+
+$time_set = microtime(true);
+
+# it breaks sites with domain_access
+#drupal_bootstrap(DRUPAL_BOOTSTRAP_DATABASE);
+#time_set('DRUPAL_BOOTSTRAP_DATABASE');
+
+drupal_bootstrap(DRUPAL_BOOTSTRAP_VARIABLES);
+time_set('DRUPAL_BOOTSTRAP_VARIABLES');
+
+drupal_bootstrap(DRUPAL_BOOTSTRAP_SESSION);
+time_set('DRUPAL_BOOTSTRAP_SESSION');
+
+drupal_bootstrap(DRUPAL_BOOTSTRAP_PAGE_HEADER);
+time_set('DRUPAL_BOOTSTRAP_PAGE_HEADER');
+
+drupal_bootstrap(DRUPAL_BOOTSTRAP_LANGUAGE);
+time_set('DRUPAL_BOOTSTRAP_LANGUAGE');
+
+drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
+time_set('DRUPAL_BOOTSTRAP_FULL');
+
+function time_set($msg=''){
+  global $time_set, $br;
+  $time = microtime(true) - $time_set;
+  echo ($msg?$msg.': ':'').round($time*1000).$br;
+  $time_set = microtime(true);
+}

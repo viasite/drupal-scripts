@@ -1,0 +1,15 @@
+#!/bin/bash
+# 08.01.2015
+# v0.1
+
+if [ $# != 1 ]; then
+	echo "$0 module_name"
+	echo "Устанавливает модуль, делает git add для папки модуля, делает коммит с комментом"
+	exit 1
+fi
+
+module_name="$1"
+
+drush en -y "$module_name" \
+	&& git add "sites/all/modules/$module_name" \
+	&& git commit -m "modules: $module_name"

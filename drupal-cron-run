@@ -1,0 +1,31 @@
+#!/bin/bash
+# v0.2
+# 24.03.2014
+# 24.12.2014 - добавлен параметр домена сайта (--uri). По умолчанию доменом считается название папки сайта, нужно для simplenews
+# 23.03.2015 - изменены параметры команды, cron вынесен в параметры
+
+if [ $# -lt 2 ] || [ "$1" = "--help" ]; then
+	echo "Usage: $0 root_path [command] [domain]"
+	echo "root_path - site root directory"
+	echo "domain - site domain, ex. example.ru, by default domain=root_path_basename"
+	exit 1
+fi
+
+root_path="$1"
+
+drush_command="cron" # elysia-cron
+if [ $# -ge 2 ]; then
+	drush_command="$2"
+fi
+
+if [ $# -ge 3 ]; then
+	domain="$3"
+else
+	domain=$(basename "$root_path")
+fi
+uri="http://$domain"
+
+
+cd "$root_path"
+user=$(whoami)
+env PATH=/usr/local/bin:/usr/bin:/bin USER="$user" COLUMNS=72 drush --root="$root_path" --uri="$uri" --quiet "$drush_command"

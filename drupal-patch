@@ -1,0 +1,44 @@
+#!/bin/bash
+# v0.2
+# 12.11.2014
+# 17.12.2014
+# 
+
+src="$1"
+path_name="drupal.patch"
+rej_name="patch.rej"
+
+if [ -f "$src" ]; then
+	#echo "copy patch from $src"
+	cp "$src" "$path_name"
+else
+	#echo "download patch $src"
+	wget -q -O "$path_name" "$src" > /dev/null
+fi
+
+patch --strip=1 --force --silent --reject-file="$rej_name" < "$path_name"
+
+rm "$path_name"
+
+log_text="$(date '+%Y-%m-%d %H:%M'); $PWD; $src"
+
+if [ -f "$rej_name" ]; then
+	# patch rejected
+	echo "$log_text; patch failed"
+
+
+	# не знаю, как не создавать бекапы, поэтому при неудаче удаляем бекапы, созданные за последнюю минуту
+	# и файл .rej
+	find -cmin -1 -name "*.orig" -exec rm {} \;
+	rm "$rej_name"
+	exit 1
+else
+	# patch success
+	echo "$log_text; patch success"
+
+	# файлы при патче меняют владельца, меняем его назад
+	if [ $(whoami) = "root" ]; then
+		user=$(stat -c '%U' $(pwd))
+		find -mmin -1 -exec chown $user:$user {} \;
+	fi
+fi

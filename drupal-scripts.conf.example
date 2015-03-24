@@ -1,0 +1,4 @@
+DRUPAL_SCRIPTS_ROOT="/usr/local/bin"
+DOCS_FILE="example-data/modules.txt"
+USERS_FILE="example-data/users.txt"
+USERS_DEFAULT_ROLE="администратор"

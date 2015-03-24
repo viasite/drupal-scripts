@@ -1,0 +1,75 @@
+#!/usr/bin/env php
+<?php
+$root_path = getcwd();
+$br = "\n";
+
+define('DRUPAL_ROOT', $root_path);
+
+$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+@require_once DRUPAL_ROOT . '/includes/bootstrap.inc';
+
+$time_set = microtime(true);
+
+drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
+#time_set('DRUPAL_BOOTSTRAP_FULL');
+
+$table = block_load_test();
+foreach ($table['#rows'] as $row) {
+  $out = array();
+  foreach($row as $col){
+    $out[] = $col['data'];
+  }
+  echo implode(',', $out)."\n";
+}
+
+function time_set($msg=''){
+  global $time_set, $br;
+  $time = microtime(true) - $time_set;
+  echo ($msg?$msg.': ':'').round($time*1000).$br;
+  $time_set = microtime(true);
+}
+
+function block_load_test(){
+  global $theme_key;
+  $rows = array();
+
+  $theme_name = variable_get('theme_default');
+  $path = drupal_get_path('theme', $theme_name) . '/' . $theme_name . '.info';
+  $info = drupal_parse_info_file($path);
+
+  $header = array(
+    array('data' => t('Block')),
+    array('data' => t('Time'), 'sort' => 'desc'),
+    array('data' => t('Theme')),
+    array('data' => t('Region')),
+  );
+
+  $old_theme_key = $theme_key;
+  $theme_key = $theme_name;
+  $blocks_by_region = _block_load_blocks();
+  $theme_key = $old_theme_key;
+
+  foreach($blocks_by_region as $region => $blocks){
+    foreach ($blocks as $block_id => $block) {
+      $start = microtime(true);
+      $array = module_invoke($block->module, 'block_view', $block->delta);
+      $time = microtime(true) - $start;
+
+      $tablerow = array(
+        array('data' => $block_id),
+        array('data' => round($time, 2)),
+        array('data' => $block->theme),
+        array('data' => $block->region),
+      );
+      $rows[] = $tablerow;
+    }
+  }
+
+  $build = array(
+    '#theme' => 'table',
+    '#header' => $header,
+    '#rows' => $rows,
+    '#caption' => 'Загрузка блоков темы '.$theme_name,
+  );
+  return $build;
+}

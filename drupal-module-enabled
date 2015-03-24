@@ -1,0 +1,9 @@
+#!/bin/bash
+# 22.02.2015
+# v0.2 - отказ от drush ради скорости
+
+#drush pml --status=enabled --type=module --pipe | grep -x "$module_name" | wc -l
+
+module_name="$1"
+#drupal-sql "SELECT COUNT(*) FROM system WHERE name='$module_name' AND type = 'module' AND status=1"
+drupal-modules-enabled | grep -x "$module_name" | wc -l

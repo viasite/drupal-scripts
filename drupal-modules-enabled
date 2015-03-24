@@ -1,0 +1,29 @@
+#!/bin/bash
+# 10.07.2014
+# 22.02.2015
+# 23.03.2015 - cache
+# v0.2 - отказ от drush ради скорости
+
+#v0.1
+#root_path=$(pwd)
+#if [ $# = "1" ]; then
+#	root_path="$1"
+#fi
+#drush --root="$root_path" pml --status=enabled --type=module --pipe
+
+cache_file="/tmp/drupal-modules-enabled-$(echo $PWD | md5sum | cut -d' ' -f1)"
+if [ -f "$cache_file" ] && [ $(find "$cache_file" -mmin -1 | wc -l) = "1" ]; then
+	cat "$cache_file"
+	exit 0
+fi
+modules=$(drupal-sql "SELECT name FROM {system} WHERE type = 'module' AND status=1")
+
+> "$cache_file"
+user=$(stat -c '%U' $PWD)
+chown $user:$user "$cache_file"
+chmod 600 "$cache_file"
+
+for module in "$modules"; do
+	echo "$module" >> "$cache_file"
+done
+cat "$cache_file"

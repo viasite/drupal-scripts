@@ -1,0 +1,6 @@
+user1@example.com administrator
+user2@example.com administrator
+user3@example.com administrator
+user4@example.com administrator DSFLk304i
+user5@example.com "content-manager"
+user6@example.com "content manager"

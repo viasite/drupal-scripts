@@ -1,0 +1,11 @@
+#!/bin/bash
+# 24.03.2015
+# v0.1
+
+[ -r /etc/drupal-scripts.conf ] && source /etc/drupal-scripts.conf
+[ -r ~/.drupal-scripts.conf ] && source ~/.drupal-scripts.conf
+
+if [ ! -x "$DRUPAL_SCRIPTS_ROOT/drupal-scripts-init" ]; then
+    echo "$DRUPAL_SCRIPTS_ROOT/drupal-scripts-init not exists or not executable, please, check config"
+    exit 1
+fi

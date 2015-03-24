@@ -1,0 +1,10 @@
+#!/bin/bash
+# 21.12.2015
+# 24.03.2015
+# v0.1
+
+for module_name in $(drupal-modules-enabled); do
+	if [ -z "$(drupal-module-doc "$module_name")" ]; then
+		echo "$module_name"
+	fi
+done

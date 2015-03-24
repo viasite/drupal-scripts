@@ -1,0 +1,105 @@
+#!/bin/bash
+# Создает юзеров в текущем друпале через drush
+# Ниже перечисляются email и роли юзеров, которых надо создать
+#
+# v1.2
+# 04.07.2014
+# 06.08.2014
+# 05.12.2014
+# @var $USERS_DEFAULT_ROLE from config
+
+. drupal-scripts-init
+
+if [ $# = 0 ]; then
+	echo "Usage: $0 email [role=$role] [password=random] - добавление одного юзера"
+	echo "       $0 all path/to/file - добавление всех юзеров, файл в формате email [role] [password]"
+	exit 1
+fi
+
+temp_file=$(mktemp -t drupal-add-users-XXXX)
+> "$temp_file"
+
+function exit_command {
+	rm "$temp_file"
+}
+
+trap 'exit_command' 0 1 2 3 9 15
+
+function add_user {
+	email="$1"
+	role="$2"
+	login="$email"
+	pass="$3"
+	if [ -z "$pass" ]; then
+		pass=$(</dev/urandom tr -dc 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789_' | head -c10; echo "")
+	fi
+	exists=-1
+
+	#echo "test: add_user $email $role $pass"
+	#return 0
+
+	drush uinf "$login" > /dev/null 2>&1
+	if [ $? = "0" ]; then exists=1; else exists=0; fi
+
+	if [ "$exists" = 0 ]; then
+		drush ucrt "$login" --mail="$email" --password="$pass" > /dev/null 2>&1
+		drush urol "$role" "$login" > /dev/null 2>&1
+		echo -e "$(basename $PWD) - ${login}\n${pass}\n" >> "$temp_file"
+		#echo $login $pass
+	else
+		#echo $login exists >> $temp_file
+		echo "$login exists"
+	fi
+}
+
+function main(){
+	if [ "$1" = "all" ]; then
+		file="$2"
+		if [ ! -f "$file" ]; then
+			echo "$file not exists!"
+			exit 1
+		fi
+
+		while read line; do
+			eval "line=($line)"
+			login=${line[0]}
+			role=${line[1]}
+			password=${line[2]}
+			add_user "$login" "$role" "$password"
+		done < "$file"
+
+	else
+		if [ "$only_one" = 1 ]; then
+			login="$1"
+			role="$2"
+			pass="$3"
+			add_user "$login" "$role" "$pass"
+			cat "$temp_file"
+			exit 0
+		fi
+	fi
+
+	cat "$temp_file"
+}
+
+
+
+
+login=""
+role="$USERS_DEFAULT_ROLE"
+pass=""
+only_one=0
+if [ $# -ge 1 ]; then
+	only_one=1
+	login="$1"
+fi
+if [ $# -ge 2 ]; then
+	only_one=1
+	role="$2"
+fi
+if [ $# -ge 3 ]; then
+	only_one=1
+	pass="$3"
+fi
+
+main "$login" "$role" "$pass"

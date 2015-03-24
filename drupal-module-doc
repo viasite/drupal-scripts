@@ -1,0 +1,18 @@
+#!/bin/bash
+# 24.03.2015
+# v0.1
+# @var $DOCS_FILE from config
+
+. drupal-scripts-init
+
+if [ -r "$DOCS_FILE" ]; then
+    echo "DOCS_FILE $DOCS_FILE not found"
+    exit 1
+fi
+
+module_name="$1"
+if [ -z "$module_name" ]; then
+    cat "$DOCS_FILE"
+else
+    grep "$module_name" "$DOCS_FILE"
+fi

@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+# 22.02.2015
+# 07.03.2015 - добавлена поддержка массивов и использование в потоке bash
+# Пример: drupal-sql "SELECT data FROM cache_menu LIMIT 1" | drupal-decode
+
+if(isset($argv[1])){
+	$serialized = $argv[1];
+}
+else{
+	$serialized = trim(fgets(STDIN));
+}
+
+$val = unserialize($serialized);
+if($val===false) $val = 0;
+if($val===true) $val = 1;
+if(is_array($val)){
+	print_r($val);
+}
+else{
+	echo $val."\n";
+}
+?>

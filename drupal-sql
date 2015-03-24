@@ -1,0 +1,16 @@
+#!/bin/bash
+# 22.02.2015 - faster than drush sqlq
+# 23.03.2015 - replace {table} to table with prefix
+# v0.2
+
+function sql(){
+	prefix=$(drupal-database-settings prefix)
+	sql=$(echo $1 | sed "s/{\(.*\?\)}/${prefix}\1/g")
+	mysql -Brs -u"$(drupal-database-settings username)" -p"$(drupal-database-settings password)" "$(drupal-database-settings database)" <<< "$sql"
+}
+
+function sqlq(){
+	sql "$1" 2>/dev/null
+}
+
+sqlq "$1" || echo "error"

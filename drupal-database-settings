@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+# Extract database credentials from settings.php
+# 23.02.2015
+# v0.1
+
+@include('sites/default/settings.php');
+$commands = array('database', 'username', 'password', 'prefix');
+$command = $argv[1];
+if(!in_array($command, $commands)){
+	echo "Usage: drupal-database-settings [".implode('|', $commands)."]\n";
+	exit(1);
+}
+
+echo $databases['default']['default'][$command]."\n";
+?>
