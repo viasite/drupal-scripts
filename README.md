@@ -11,9 +11,7 @@ Some scripts expects that contrib modules place in sites/all/modules
 - Drupal 7.x
 
 # Install
-- Copy all files to /usr/local/bin
-- Copy drupal-scripts.conf.example to /etc/drupal-scripts.conf or ~/.drupal-scripts.conf
-- Make all executable
+sh install.sh /usr/local
 
 # TODO
 - [x] move shared code to drupal-scripts-init

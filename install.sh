@@ -12,10 +12,12 @@ fi
 
 
 mkdir -p "$PREFIX"/bin
+chmod +x "$DRUPAL_SCRIPTS_ROOT"/bin/*
 ln -s "$DRUPAL_SCRIPTS_ROOT"/bin/* "$PREFIX"/bin
 #cp -R "$DRUPAL_SCRIPTS_ROOT"/bin/* "$PREFIX"/bin
 
 if [ ! -e "$USER_CONFIG_PATH" ]; then
+
 cp drupal-scripts.conf.example "$USER_CONFIG_PATH"
 else
 	echo "$USER_CONFIG_PATH exists"
