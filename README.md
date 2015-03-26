@@ -16,7 +16,7 @@ Some scripts expects that contrib modules place in sites/all/modules
 - Make all executable
 
 # TODO
-- [ ] move shared code to drupal-scripts-init
+- [x] move shared code to drupal-scripts-init
+- [ ] replace $(basename $PWD) to get_domain
 - [ ] write docs
-- [ ] write installer
 - [ ] write tests

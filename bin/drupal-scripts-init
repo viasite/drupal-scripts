@@ -1,11 +1,40 @@
 #!/bin/bash
 # 24.03.2015
 # v0.1
+# $SCRPIT_HELP - help text
 
-[ -r /etc/drupal-scripts.conf ] && source /etc/drupal-scripts.conf
-[ -r ~/.drupal-scripts.conf ] && source ~/.drupal-scripts.conf
+[ -r /etc/drupal-scripts.conf ] && . /etc/drupal-scripts.conf
+[ -r ~/.drupal-scripts.conf ] && . ~/.drupal-scripts.conf
 
-if [ ! -x "$DRUPAL_SCRIPTS_ROOT/drupal-scripts-init" ]; then
-    echo "$DRUPAL_SCRIPTS_ROOT/drupal-scripts-init not exists or not executable, please, check config"
+function usage {
+    version="$(grep '# \?v[0-9.]\+' -o $0 | tr -d '# ')"
+    script_name="$(basename $0)"
+    echo "$script_name $version"
+    echo "$SCRIPT_HELP" | sed "s/{0}/${script_name}/g"
+}
+
+function is_drupal {
+    [ -r includes/bootstrap.inc ] && echo 1 || echo ""
+}
+
+function get_domain {
+    echo ${PWD##*/}
+}
+
+function check_drush {
+    command -v drush >/dev/null 2>&1 || {
+        echo >&2 "drush required but it's not installed. Aborting."
+        exit 1
+    }
+}
+
+if [ "$1" = "--help" ] && [ -n "$SCRIPT_HELP" ]; then
+    usage
+    echo '!'
+    exit 1
+fi
+
+if [ -z "$(is_drupal)" ]; then
+    echo "You are not in Drupal root path!"
     exit 1
 fi
