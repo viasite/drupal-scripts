@@ -10,7 +10,7 @@ function script_usage($commands){
 
 Shows database credentials from settings.php.
 
-Usage: drupal-database-settings [".implode('|', $commands)."]
+Usage: drupal-database-settings (".implode('|', $commands).")
 ";
 }
 

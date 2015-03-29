@@ -4,13 +4,6 @@
 # 23.03.2015 - cache
 # v0.2 - отказ от drush ради скорости
 
-#v0.1
-#root_path=$(pwd)
-#if [ $# = "1" ]; then
-#	root_path="$1"
-#fi
-#drush --root="$root_path" pml --status=enabled --type=module --pipe
-
 SCRIPT_HELP="
 List enabled modules.
 Same as drush pml --status=enabled --type=module --pipe,
