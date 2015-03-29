@@ -1,5 +1,14 @@
 #!/usr/bin/env php
 <?php
+if(isset($argv[1]) && $argv[1]=='--help'){
+  echo "drupal-block-timings v0.1
+
+Shows block load time for each block in Drupal.
+Columns: block,time,theme,region
+";
+  exit(1);
+}
+
 $root_path = getcwd();
 $br = "\n";
 

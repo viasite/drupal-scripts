@@ -3,6 +3,8 @@
 # v0.1
 # $SCRPIT_HELP - help text
 
+SCRIPT_SIMULATE=""
+
 [ -r /etc/drupal-scripts.conf ] && . /etc/drupal-scripts.conf
 [ -r ~/.drupal-scripts.conf ] && . ~/.drupal-scripts.conf
 
@@ -23,18 +25,26 @@ function get_domain {
 
 function check_drush {
     command -v drush >/dev/null 2>&1 || {
-        echo >&2 "drush required but it's not installed. Aborting."
+        echo >&2 "Drush required but it's not installed. Aborting."
         exit 1
     }
 }
 
+function check_drupal {
+    if [ -z "$(is_drupal)" ]; then
+        echo "Current directory \"$PWD\" is not in Drupal root path, aborting."
+        exit 1
+    fi
+}
+
+while getopts ":s" opt; do
+    case "$opt" in
+        s) SCRIPT_SIMULATE="1"
+        ;;
+    esac
+done
+
 if [ "$1" = "--help" ] && [ -n "$SCRIPT_HELP" ]; then
     usage
-    echo '!'
-    exit 1
-fi
-
-if [ -z "$(is_drupal)" ]; then
-    echo "You are not in Drupal root path!"
     exit 1
 fi

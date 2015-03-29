@@ -19,13 +19,13 @@ Usage: {0} email [role=$role] [password=random]
 
 . drupal-scripts-init
 
-check_drush
-
 if [ $# = 0 ]; then
 	usage
 	exit 1
 fi
 
+check_drush
+check_drupal
 
 function add_user {
 	email="$1"
@@ -35,7 +35,7 @@ function add_user {
 	if [ -z "$role" ]; then
 		role="$USERS_DEFAULT_ROLE"
 		if [ -z "$USERS_DEFAULT_ROLE" ]; then
-			>&2 echo "USERS_DEFAULT_ROLE not defined, check config"
+			echo >&2 "USERS_DEFAULT_ROLE not defined, check config"
 		fi
 	fi
 
@@ -49,11 +49,11 @@ function add_user {
 	if [ "$exists" = 0 ]; then
 		drush ucrt "$login" --mail="$email" --password="$password" > /dev/null
 		if [ $? = 0 ] && [ -n "$role" ]; then
-			drush urol "$role" "$login" > /dev/null 2>&1 || >&2 echo "There is no role named: $role"
+			drush urol "$role" "$login" > /dev/null 2>&1 || echo >&2 "There is no role named: $role"
 		fi
 		echo -e "$(get_domain) - ${login}\n${password}\n" >> "$temp_file"
 	else
-		>&2 echo "$login exists"
+		echo >&2 "$login exists"
 	fi
 }
 
@@ -65,7 +65,7 @@ function add_from_file(){
 	fi
 
 	if [ ! -f "$file" ]; then
-		>&2 echo "Users list file \"$file\" not exists!"
+		echo >&2 "Users list file \"$file\" not exists!"
 		exit 1
 	fi
 

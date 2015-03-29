@@ -3,39 +3,49 @@
 # v0.2
 # 03.03.2014
 # 05.12.2014 - fixed duplicate cron add
-# 
+# @var $DRUPAL_SCRIPTS_ROOT from config
+# @var $SCRIPT_SIMULATE from drupal-scripts-init
+
+SCRIPT_HELP="
+Add drupal-cron-run to user system cron.
+
+Cron job runs in random minute every 3 hours.
+Cron job add to user-owner of root_path.
+
+Options:
+        -s Simulate mode, don't actually change the system"
+
+. drupal-scripts-init
+
+check_drush
+check_drupal
 
 root_path="$PWD"
-
 user=$(stat -c '%U' "$root_path")
 
-echo "root: $root_path"
-echo "user: $user"
+temp_file=$(mktemp -t drupal-cron-add-XXXX)
+trap 'rm -f "$temp_file"' EXIT
 
-cron_command="$DRUPAL_SCRIPTS_ROOT/drupal-cron-run $root_path"
+crontab -l -u "$user" > "$temp_file" 2>/dev/null
 
-# check drush cronjob in cron
-if [ $(crontab -l -u "$user" | grep "$cron_command" | wc -l) != "0" ]; then
+cron_command="$DRUPAL_SCRIPTS_ROOT/drupal-cron-run \"$root_path\""
+
+if [ -n "$(grep "$cron_command" "$temp_file")" ]; then
 	echo "drush was in cron, exit"
 	exit 1
 fi
 
-# check is drupal directory
-if [ -z "$(drush status | grep "Drupal version")" ]; then
+if [ -z "$(is_drupal)" ]; then
 	echo "$root_path is not drupal root, exit"
 	exit 1
 fi
 
 mins=$(shuf -i 1-59 -n 1)
-
-# tmp cronfile
-tmpfile=$(mktemp -t drupal-cron-add-XXXX)
-crontab -l -u "$user" | sed 's/>/>>/' > "$tmpfile"
-
 cron_line="$mins */3 * * * $cron_command"
-echo "cron_line"
-echo "cron_line" >> "$tmpfile"
+echo "$cron_line" >> "$temp_file"
 
-cat "$tmpfile" | crontab -u "$user" -
-
-rm "$tmpfile"
+if [ -n "$SCRIPT_SIMULATE" ]; then
+	cat "$temp_file"
+else
+	cat "$temp_file" | crontab -u "$user" -
+fi

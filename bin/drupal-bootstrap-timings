@@ -1,5 +1,14 @@
 #!/usr/bin/env php
 <?php
+if(isset($argv[1]) && $argv[1]=='--help'){
+  echo "drupal-bootstrap-timings v0.1
+
+Shows Drupal bootstrap load timings.
+Each time shows bootstrap from previous level.
+";
+  exit(1);
+}
+
 $root_path = getcwd();
 $br = "\n";
 

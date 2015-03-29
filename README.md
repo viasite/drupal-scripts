@@ -15,6 +15,7 @@ sh install.sh /usr/local
 
 # TODO
 - [x] move shared code to drupal-scripts-init
+- [ ] rewrite drupal scripts root in conf.example
 - [ ] replace $(basename $PWD) to get_domain
 - [ ] write docs
 - [ ] write tests

@@ -1,0 +1,27 @@
+#!/bin/bash
+# 23.02.2015
+# v0.1
+
+SCRIPT_HELP="
+Cleans cache_ table and optimize it.
+Delete only expired cache.
+
+Usage: {0} cache_table_name"
+
+. drupal-scripts-init
+
+check_drupal
+
+if [ $# != 1 ]; then
+	usage
+	exit 1
+fi
+
+cache_table="$1"
+if [ -z $(echo "$cache_table" | grep "^cache_") ]; then
+	echo "$cache_table not cache table!"
+	exit 1
+fi
+
+drupal-sql "DELETE FROM {${cache_table}} WHERE expire<UNIX_TIMESTAMP()" > /dev/null
+drupal-sql "OPTIMIZE TABLE {${cache_table}}" > /dev/null
