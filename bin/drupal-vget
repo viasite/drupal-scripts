@@ -8,4 +8,14 @@
 #if [ -z "$val" ]; then val=0; fi
 #echo $val
 
+SCRIPT_HELP="
+Show Drupal variable.
+Same as drush vget, but faster.
+
+Usage: {0} var_name"
+
+. drupal-scripts-init
+
+check_drupal
+
 drupal-sql "SELECT value FROM {variable} WHERE name='$1'" | drupal-decode

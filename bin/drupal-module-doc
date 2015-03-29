@@ -3,6 +3,9 @@
 # v0.1
 # @var $DOCS_FILE from config
 
+SCRIPT_HELP="
+Show module brief module info from custom file with internal documentation."
+
 . drupal-scripts-init
 
 if [ -r "$DOCS_FILE" ]; then

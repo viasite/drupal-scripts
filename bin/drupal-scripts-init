@@ -44,6 +44,13 @@ while getopts ":s" opt; do
     esac
 done
 
+if [ "$1" = "--help" ] && [ "$(basename $0)" = "drupal-scripts-init" ]; then
+    echo "drupal-scripts-init v0.1
+
+Include file for all scripts. Not used independently."
+    exit 1
+fi
+
 if [ "$1" = "--help" ] && [ -n "$SCRIPT_HELP" ]; then
     usage
     exit 1

@@ -3,6 +3,16 @@
 # v0.2
 # отказ от drush ради скорости
 
+SCRIPT_HELP="
+Show count rows from table.
+Same as drupal-sql \"SELECT COUNT(*) FROM {table_name}\".
+
+Usage: {0} table_name"
+
+. drupal-scripts-init
+
+check_drupal
+
 count=$(drupal-sql "SELECT COUNT(*) FROM {$1}")
 if [ "$count" = "error" ]; then count=0; fi
 echo "$count"

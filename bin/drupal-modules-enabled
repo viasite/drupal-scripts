@@ -11,6 +11,15 @@
 #fi
 #drush --root="$root_path" pml --status=enabled --type=module --pipe
 
+SCRIPT_HELP="
+List enabled modules.
+Same as drush pml --status=enabled --type=module --pipe,
+but faster and with 10 minute cache"
+
+. drupal-scripts-init
+
+check_drupal
+
 cache_file="/tmp/drupal-modules-enabled-$(echo $PWD | md5sum | cut -d' ' -f1)"
 if [ -f "$cache_file" ] && [ $(find "$cache_file" -mmin -1 | wc -l) = "1" ]; then
 	cat "$cache_file"
@@ -26,4 +35,5 @@ chmod 600 "$cache_file"
 for module in "$modules"; do
 	echo "$module" >> "$cache_file"
 done
+
 cat "$cache_file"

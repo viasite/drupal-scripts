@@ -2,9 +2,18 @@
 # 08.01.2015
 # v0.1
 
+SCRIPT_HELP="
+Install module, commit module to git.
+
+Usage: {0} module_name"
+
+. drupal-scripts-init
+
+check_drush
+check_drupal
+
 if [ $# != 1 ]; then
-	echo "$0 module_name"
-	echo "Устанавливает модуль, делает git add для папки модуля, делает коммит с комментом"
+	usage
 	exit 1
 fi
 

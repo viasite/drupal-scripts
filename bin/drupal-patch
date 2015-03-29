@@ -4,6 +4,15 @@
 # 17.12.2014
 # 
 
+SCRIPT_HELP="
+Apply patch.
+
+Usage: {0} (path_file|path_url)"
+
+. drupal-scripts-init
+
+check_drupal
+
 src="$1"
 path_name="drupal.patch"
 rej_name="patch.rej"
