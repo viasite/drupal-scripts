@@ -42,6 +42,7 @@ while getopts ":s" opt; do
         s) SCRIPT_SIMULATE="1"
         ;;
     esac
+    shift
 done
 
 if [ "$1" = "--help" ] && [ "$(basename $0)" = "drupal-scripts-init" ]; then
