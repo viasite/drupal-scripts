@@ -9,6 +9,9 @@ function script_usage(){
 	echo "drupal-decode v0.1
 
 Decode serialized values from Drupal database.
+Can decode variables and arrays.
+true decodes as 1 and false as 0.
+Arrays decodes as print_r.
 
 Usage: drupal-decode \"serialized_string\"
        echo \"serialized_string\" | drupal-decode
@@ -27,12 +30,17 @@ else{
 	$serialized = trim(fgets(STDIN));
 }
 
-$val = unserialize($serialized);
-if($val===false) $val = 0;
-if($val===true) $val = 1;
+$val = @unserialize($serialized);
+if($val===false && $serialized!='b:0;'){
+	fwrite(STDERR, "'$serialized' is not serialized string.\n");
+	exit(1);
+}
+
 if(is_array($val)){
 	print_r($val);
 }
 else{
+	if($val===false) $val = 0;
+	if($val===true) $val = 1;
 	echo $val."\n";
 }
