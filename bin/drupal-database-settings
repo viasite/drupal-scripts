@@ -3,7 +3,7 @@
 # 23.02.2015
 # v0.1
 
-$commands = array('database', 'username', 'password', 'prefix');
+$commands = array('database', 'username', 'password', 'prefix', 'host', 'port');
 
 function script_usage($commands){
 	echo "drupal-database-settings v0.1
