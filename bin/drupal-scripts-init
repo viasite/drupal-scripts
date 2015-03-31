@@ -4,6 +4,9 @@
 # $SCRPIT_HELP - help text
 
 SCRIPT_SIMULATE=""
+SCRIPT_ASSUME_YES=""
+SCRIPT_ASSUME_NO=""
+SCRIPT_FORCE=""
 
 [ -r /etc/drupal-scripts.conf ] && . /etc/drupal-scripts.conf
 [ -r ~/.drupal-scripts.conf ] && . ~/.drupal-scripts.conf
@@ -37,9 +40,15 @@ function check_drupal {
     fi
 }
 
-while getopts ":s" opt; do
+while getopts ":fnsy" opt; do
     case "$opt" in
+        f) SCRIPT_FORCE="1"
+        ;;
+        n) SCRIPT_ASSUME_NO="1"
+        ;;
         s) SCRIPT_SIMULATE="1"
+        ;;
+        y) SCRIPT_ASSUME_YES="1"
         ;;
     esac
     shift

@@ -1,0 +1,66 @@
+#!/bin/bash
+# 02.05.2014
+# 11.09.2014
+# 31.03.2015
+# v0.3
+#
+
+SCRIPT_HELP="
+Disable and uninstall module via Drush, then remove module directory with confirmation.
+Working only for modules in sites/all
+
+Usage: {0} module_name
+
+Options:
+    -y Assume yes on delete directory confirmation
+    -n Assume no on delete directory confirmation"
+
+. drupal-scripts-init
+
+check_drush
+check_drupal
+
+module_name="$1"
+if [ -z "$module_name" ]; then
+	usage
+	exit 1
+fi
+
+module_dir="sites/all/modules/$1"
+if [ ! -d "$module_dir" ]; then
+	echo >&2 "module_dir $module_dir not exists, exit"
+	exit 1
+fi
+
+drush dis "$module_name" -y
+if [ $(drupal-module-enabled) = "1" ]; then
+	echo >&2 "Cannot disable module"
+	exit 1
+fi
+
+if [ $(drush pm-uninstall "$module_name" -y 2>&1 | grep -c error) != 0 ]; then
+	echo >&2 "Cannot uninstall module"
+	exit 1
+fi
+
+rm_command="rm -r $module_dir"
+
+is_remove="0"
+
+if [ -n "$SCRIPT_ASSUME_YES" ] || [ -n "$SCRIPT_ASSUME_NO" ]; then
+	if [ -n "$SCRIPT_ASSUME_YES" ]; then
+		is_remove="1"
+	fi
+else
+	read -p "$rm_command ? " -n 1 -r
+	echo ""
+	if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+		is_remove="1"
+	fi
+fi
+
+if [ "$is_remove" = "1" ]; then
+	$rm_command
+else
+	echo "$rm_command"
+fi
