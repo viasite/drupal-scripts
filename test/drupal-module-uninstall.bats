@@ -10,31 +10,26 @@ setup() {
 }
 
 @test "rm module without parameters" {
-	skip
 	run drupal-module-uninstall
 	[ $status -eq 1 ]
 }
 
 @test "rm not existing module" {
-	skip
 	run drupal-module-uninstall foo
 	[ $status -eq 1 ]
 }
 
 @test "rm module node" {
-	skip
 	run drupal-module-uninstall -y node
 	[ $status -eq 1 ]
 }
 
 @test "rm module that required by other module" {
-	skip
 	run drupal-module-uninstall -y uuid
 	[ $status -eq 1 ]
 }
 
 @test "rm module assume yes" {
-	skip
 	run drupal-module-uninstall -y yandex_metrics
 	[ $status -eq 0 ]
 	[ ! -d sites/all/modules/yandex_metrics ]
