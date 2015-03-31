@@ -164,6 +164,7 @@ Usage: drupal-vget var_name
 # TODO
 - [x] move shared code to drupal-scripts-init
 - [ ] rewrite drupal scripts root in conf.example
+- [ ] correct exit codes
 - [ ] replace $(basename $PWD) to get_domain
 - [ ] write docs
 - [ ] write tests

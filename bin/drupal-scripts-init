@@ -8,8 +8,16 @@ SCRIPT_ASSUME_YES=""
 SCRIPT_ASSUME_NO=""
 SCRIPT_FORCE=""
 
-[ -r /etc/drupal-scripts.conf ] && . /etc/drupal-scripts.conf
-[ -r ~/.drupal-scripts.conf ] && . ~/.drupal-scripts.conf
+if [ -z "$DRUPAL_SCRIPTS_TEST" ]; then
+    [ -r /etc/drupal-scripts.conf ] && . /etc/drupal-scripts.conf
+    [ -r ~/.drupal-scripts.conf ] && . ~/.drupal-scripts.conf
+else
+    DRUPAL_SCRIPTS_ROOT="$DRUPAL_SCRIPTS_ROOT_TEST"
+    . "$DRUPAL_SCRIPTS_ROOT"/drupal-scripts.conf.example
+    DRUPAL_SCRIPTS_ROOT="$DRUPAL_SCRIPTS_ROOT_TEST"
+    USERS_LIST_FILE="$DRUPAL_SCRIPTS_ROOT/$USERS_LIST_FILE"
+    DOCS_FILE="$DRUPAL_SCRIPTS_ROOT/$DOCS_FILE"
+fi
 
 function usage {
     version="$(grep '# \?v[0-9.]\+' -o $0 | tr -d '# ')"

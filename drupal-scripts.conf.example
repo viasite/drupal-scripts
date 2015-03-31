@@ -6,7 +6,4 @@ DOCS_FILE="example-data/modules.txt"
 
 # drupal-add-users
 USERS_LIST_FILE="example-data/users.txt"
-USERS_DEFAULT_ROLE="администратор"
-
-# root path for bats tests
-TEST_ROOT_PATH=""
+USERS_DEFAULT_ROLE="administrator"
