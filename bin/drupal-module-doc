@@ -23,8 +23,10 @@ module_name="$1"
 if [ -z "$module_name" ]; then
     cat "$DOCS_FILE"
 else
-    help=$(grep -w "project/$module_name" "$DOCS_FILE")
-    help2=$(grep -w "$module_name" "$DOCS_FILE" | grep -vw "project/$module_name")
+    help=$(grep "\(^\|\/\)$module_name\( -\|$\)" "$DOCS_FILE")
+    if [ -n "$help" ]; then
+        help2=$(grep -w "$module_name" "$DOCS_FILE" | grep -v "\(^\|\/\)$module_name\( -\|$\)")
+    fi
     if [ -z "$help$help2" ]; then
         exit 1
     else

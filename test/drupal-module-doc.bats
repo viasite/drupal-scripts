@@ -3,7 +3,7 @@
 @test "list all docs" {
 	run drupal-module-doc
 	[ $status -eq 0 ]
-	[ $(echo "$output" | wc -l) = 3 ]
+	[ $(echo "$output" | wc -l) = 5 ]
 }
 
 @test "list one module" {

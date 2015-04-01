@@ -1,3 +1,5 @@
 https://www.drupal.org/project/devel - Helper functions for Drupal developers and inquisitive admins
 https://www.drupal.org/project/field_collection - Provides a field-collection field, to which any number of fields can be attached.
 https://www.drupal.org/project/field_collection_views - This module provides a formatter leveraging views for the field_collection module.
+node - core module without full url
+field
