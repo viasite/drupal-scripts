@@ -4,6 +4,9 @@ DRUPAL_SCRIPTS_ROOT="/usr/local/bin"
 # drupal-module-doc
 DOCS_FILE="example-data/modules.txt"
 
+# drupal-modules-enabled, cache in minutes
+MODULES_CACHE_TIME=10
+
 # drupal-add-users
 USERS_LIST_FILE="example-data/users.txt"
 USERS_DEFAULT_ROLE="administrator"

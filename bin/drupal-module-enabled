@@ -5,7 +5,10 @@
 SCRIPT_HELP="
 Check module status.
 Same as drush pml --status=enabled --type=module, but faster.
-Outputs 1 or 0."
+Outputs 1 or 0.
+
+Options:
+    -f Force check module, without cache"
 
 . drupal-scripts-init
 
@@ -13,4 +16,8 @@ check_drupal
 
 module_name="$1"
 #drupal-sql "SELECT COUNT(*) FROM system WHERE name='$module_name' AND type = 'module' AND status=1"
-drupal-modules-enabled | grep -x "$module_name" | wc -l
+if [ -n "$SCRIPT_FORCE" ]; then
+    drupal-modules-enabled -f | grep -xc "$module_name"
+else
+    drupal-modules-enabled | grep -xc "$module_name"
+fi

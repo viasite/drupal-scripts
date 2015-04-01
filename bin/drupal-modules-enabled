@@ -7,23 +7,39 @@
 SCRIPT_HELP="
 List enabled modules.
 Same as drush pml --status=enabled --type=module --pipe,
-but faster and with 10 minute cache"
+but faster and with cache.
+Cache time defines in minutes, from MODULES_CACHE_TIME in config, default 10 minutes.
+
+Options:
+    -f Force check module, without cache"
 
 . drupal-scripts-init
 
 check_drupal
 
+if [[ ! "$MODULES_CACHE_TIME" =~ ^-?[0-9]+$ ]]; then
+	MODULES_CACHE_TIME=10
+fi
+
 cache_file="/tmp/drupal-modules-enabled-$(echo $PWD | md5sum | cut -d' ' -f1)"
-if [ -f "$cache_file" ] && [ $(find "$cache_file" -mmin -1 | wc -l) = "1" ]; then
+if [ -f "$cache_file" ] && [ ! -w "$cache_file" ]; then
+	echo >&2 "cache file $cache_file not writable, aborting"
+	exit 1
+fi
+
+if [ -z "$SCRIPT_FORCE" ] && [ -f "$cache_file" ] && [ $(find "$cache_file" -mmin -${MODULES_CACHE_TIME} | wc -l) = "1" ]; then
 	cat "$cache_file"
 	exit 0
 fi
-modules=$(drupal-sql "SELECT name FROM {system} WHERE type = 'module' AND status=1")
+
+modules=$(drupal-sql "SELECT name FROM {system} WHERE type = 'module' AND status=1 AND filename NOT LIKE '%.profile' ORDER BY name")
 
 > "$cache_file"
 user=$(stat -c '%U' $PWD)
-chown $user:$user "$cache_file"
-chmod 600 "$cache_file"
+if [ "$(whoami)" != "$user" ]; then
+	chown $user:$user "$cache_file"
+	chmod 600 "$cache_file"
+fi
 
 for module in "$modules"; do
 	echo "$module" >> "$cache_file"
