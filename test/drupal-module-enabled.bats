@@ -19,10 +19,11 @@ teardown() {
 	drush dis -y yandex_metrics
 	run drupal-module-enabled -f yandex_metrics
 	[ $status -eq 1 ]
-	[ -z "$output" ]
+	[ "$output" -eq 0 ]
 }
 
 @test "check cache module" {
+	run drupal-module-enabled -f yandex_metrics
 	[ $status -eq 0 ]
 	[ "$output" -eq 1 ]
 	drush dis -y yandex_metrics
