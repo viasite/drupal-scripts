@@ -2,7 +2,7 @@
 # 10.07.2014
 # 22.02.2015
 # 23.03.2015 - cache
-# v0.2 - отказ от drush ради скорости
+# v0.2 - removed drush for speedup
 
 SCRIPT_HELP="
 List enabled modules.

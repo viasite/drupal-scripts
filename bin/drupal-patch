@@ -49,8 +49,8 @@ if [ -f "$rej_name" ]; then
 	# patch rejected
 	echo "$log_text; patch failed"
 
-	# не знаю, как не создавать бекапы, поэтому при неудаче удаляем бекапы, созданные за последнюю минуту
-	# и файл .rej
+	# I dont't know, how not to create backups, therefore clean backups for last 1 minute if reject
+	# and .rej file
 	find -cmin -1 -name "*.orig" -exec rm {} \;
 	exit 1
 else

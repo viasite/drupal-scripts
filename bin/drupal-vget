@@ -1,7 +1,7 @@
 #!/bin/bash
 # 23.02.2015
 # v0.2
-# отказ от drush ради скорости
+# removed drush for speedup
 
 #v0.1
 #val=$(drush vget "$1" --exact 2>&1 | grep "^$1: " | cut -d':' -f2 | tr -d ' ' | sed "s/'//g" | grep -v ERROR)

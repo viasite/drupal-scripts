@@ -1,6 +1,6 @@
 #!/bin/bash
 # 22.02.2015
-# v0.2 - отказ от drush ради скорости
+# v0.2 - removed drush for speedup
 
 SCRIPT_HELP="
 Check module status.

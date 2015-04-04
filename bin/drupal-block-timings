@@ -78,7 +78,7 @@ function block_load_test() {
     '#theme' => 'table',
     '#header' => $header,
     '#rows' => $rows,
-    '#caption' => 'Загрузка блоков темы ' . $theme_name,
+    '#caption' => 'Load blocks for theme ' . $theme_name,
   );
   return $build;
 }

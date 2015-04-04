@@ -1,8 +1,8 @@
 #!/bin/bash
 # v0.2
 # 24.03.2014
-# 24.12.2014 - добавлен параметр домена сайта (--uri). По умолчанию доменом считается название папки сайта, нужно для simplenews
-# 23.03.2015 - изменены параметры команды, cron вынесен в параметры
+# 24.12.2014 - added (--uri)
+# 23.03.2015 - changed parameters
 
 SCRIPT_HELP="
 Run Drush cron in correct environment.
@@ -15,7 +15,7 @@ Usage: {0} root_path
 
        {0} root_path cron domain
         - run drush cron in root_path using domain.
-          Need for override http://default.
+          Need for override http://default, for simplenews.
           Default domain - basename of root_path"
 
 . drupal-scripts-init
