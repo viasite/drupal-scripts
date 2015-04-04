@@ -7,12 +7,18 @@ SCRIPT_HELP="
 Show count rows from table.
 Same as drupal-sql \"SELECT COUNT(*) FROM {table_name}\".
 
-Usage: {0} table_name"
+Usage: {0} table_name
+
+Output 0 if error occured."
 
 . drupal-scripts-init
 
 check_drupal
 
 count=$(drupal-sql "SELECT COUNT(*) FROM {$1}")
-if [ "$count" = "error" ]; then count=0; fi
-echo "$count"
+if [ "$count" = "error" ]; then
+	echo 0;
+	exit 1
+else
+	echo "$count"
+fi

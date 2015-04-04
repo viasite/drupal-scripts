@@ -10,7 +10,12 @@ Same as drush sql-query, but faster.
 Usage: {0} \"query\"
 
 Table names must be encapsulated in {} if db has prefixes, ex.
-AELECT COUNT(*) FROM {node}"
+SELECT COUNT(*) FROM {node}
+
+Output \"error\" if error occured.
+
+Options:
+    -v Verbose mode, output sql and connection parameters, explain sql errors"
 
 . drupal-scripts-init
 
