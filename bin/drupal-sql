@@ -9,20 +9,42 @@ Same as drush sql-query, but faster.
 
 Usage: {0} \"query\"
 
-Table names must be encapsulated in {}"
+Table names must be encapsulated in {} if db has prefixes, ex.
+AELECT COUNT(*) FROM {node}"
 
 . drupal-scripts-init
 
 check_drupal
 
+if [ $# = 0 ]; then
+	usage
+	exit 1
+fi
+
+function s(){
+	drupal-database-settings "$1"
+}
+
 function sql(){
-	prefix=$(drupal-database-settings prefix)
+	prefix=$(s prefix)
 	sql=$(echo $1 | sed "s/{\(.*\?\)}/${prefix}\1/g")
-	mysql -Brs -u"$(drupal-database-settings username)" -p"$(drupal-database-settings password)" "$(drupal-database-settings database)" <<< "$sql"
+	[ -n "$SCRIPT_VERBOSE" ] && echo >&2 "sql: $sql"
+
+	[ -n "$SCRIPT_VERBOSE" ] && echo >&2 "connect: -u$(s username) -p$(s password) -h$(s host) -P$(s port) $(s database)"
+
+	mysql -Brs -u"$(s username)" -p"$(s password)" -h"$(s host)" -P"$(s port)" "$(s database)" <<< "$sql"
 }
 
 function sqlq(){
 	sql "$1" 2>/dev/null
 }
 
-sqlq "$1" || echo "error"
+if [ -n "$SCRIPT_VERBOSE" ]; then
+	sql "$1"
+else
+	sqlq "$1"
+	if [ $? -ne 0 ]; then
+		echo "error"
+		exit 1
+	fi
+fi

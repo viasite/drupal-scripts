@@ -7,6 +7,7 @@ SCRIPT_SIMULATE=""
 SCRIPT_ASSUME_YES=""
 SCRIPT_ASSUME_NO=""
 SCRIPT_FORCE=""
+SCRIPT_VERBOSE=""
 
 if [ -z "$DRUPAL_SCRIPTS_TEST" ]; then
     [ -r /etc/drupal-scripts.conf ] && . /etc/drupal-scripts.conf
@@ -48,13 +49,15 @@ function check_drupal {
     fi
 }
 
-while getopts ":fnsy" opt; do
+while getopts ":fnsvy" opt; do
     case "$opt" in
         f) SCRIPT_FORCE="1"
         ;;
         n) SCRIPT_ASSUME_NO="1"
         ;;
         s) SCRIPT_SIMULATE="1"
+        ;;
+        v) SCRIPT_VERBOSE="1"
         ;;
         y) SCRIPT_ASSUME_YES="1"
         ;;
