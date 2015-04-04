@@ -1,6 +1,6 @@
 #!/usr/bin/env php
 <?php
-if(isset($argv[1]) && $argv[1]=='--help'){
+if (isset($argv[1]) && $argv[1] == '--help') {
   echo "drupal-block-timings v0.1
 
 Shows block load time for each block in Drupal.
@@ -17,7 +17,7 @@ define('DRUPAL_ROOT', $root_path);
 $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 @require_once DRUPAL_ROOT . '/includes/bootstrap.inc';
 
-$time_set = microtime(true);
+$time_set = microtime(TRUE);
 
 drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 #time_set('DRUPAL_BOOTSTRAP_FULL');
@@ -25,20 +25,20 @@ drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 $table = block_load_test();
 foreach ($table['#rows'] as $row) {
   $out = array();
-  foreach($row as $col){
+  foreach ($row as $col) {
     $out[] = $col['data'];
   }
-  echo implode(',', $out)."\n";
+  echo implode(',', $out) . "\n";
 }
 
-function time_set($msg=''){
+function time_set($msg = '') {
   global $time_set, $br;
-  $time = microtime(true) - $time_set;
-  echo ($msg?$msg.': ':'').round($time*1000).$br;
-  $time_set = microtime(true);
+  $time = microtime(TRUE) - $time_set;
+  echo ($msg ? $msg . ': ' : '') . round($time * 1000) . $br;
+  $time_set = microtime(TRUE);
 }
 
-function block_load_test(){
+function block_load_test() {
   global $theme_key;
   $rows = array();
 
@@ -58,11 +58,11 @@ function block_load_test(){
   $blocks_by_region = _block_load_blocks();
   $theme_key = $old_theme_key;
 
-  foreach($blocks_by_region as $region => $blocks){
+  foreach ($blocks_by_region as $region => $blocks) {
     foreach ($blocks as $block_id => $block) {
-      $start = microtime(true);
+      $start = microtime(TRUE);
       $array = module_invoke($block->module, 'block_view', $block->delta);
-      $time = microtime(true) - $start;
+      $time = microtime(TRUE) - $start;
 
       $tablerow = array(
         array('data' => $block_id),
@@ -78,7 +78,7 @@ function block_load_test(){
     '#theme' => 'table',
     '#header' => $header,
     '#rows' => $rows,
-    '#caption' => 'Загрузка блоков темы '.$theme_name,
+    '#caption' => 'Загрузка блоков темы ' . $theme_name,
   );
   return $build;
 }

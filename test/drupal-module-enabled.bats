@@ -2,14 +2,10 @@
 
 setup() {
 	find /tmp -maxdepth 1 -name "drupal-modules-enabled-*" -exec rm {} \;
-	drush en -y yandex_metrics 2>/dev/null
-}
-
-teardown() {
-	drush dis -y yandex_metrics
 }
 
 @test "check enabled module" {
+	drush en -y yandex_metrics
 	run drupal-module-enabled -f yandex_metrics
 	[ $status -eq 0 ]
 	[ "$output" -eq 1 ]
@@ -23,6 +19,7 @@ teardown() {
 }
 
 @test "check cache module" {
+	drush en -y yandex_metrics
 	run drupal-module-enabled -f yandex_metrics
 	[ $status -eq 0 ]
 	[ "$output" -eq 1 ]

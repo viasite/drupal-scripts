@@ -76,9 +76,9 @@ function add_from_file(){
 
 	while read line; do
 		eval "line=($line)"
-		login=${line[0]}
-		role=${line[1]}
-		password=${line[2]}
+		login="${line[0]}"
+		role="${line[1]}"
+		password="${line[2]}"
 		add_user "$login" "$role" "$password"
 	done < "$file"
 }

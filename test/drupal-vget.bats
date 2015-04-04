@@ -1,12 +1,15 @@
 #!/usr/bin/env bats
 
 setup() {
-	#drush vset "drupal_scripts_string" "foo"
-	#drush vset "drupal_scripts_true" "true"
-	#drush vset "drupal_scripts_false" "false"
-	#drush vset "drupal_scripts_empty" ""
-	#drush vset "drupal_scripts_array" $(php -r "echo serialize(array('foo'));")
-	echo ""
+	# TODO: SETUP_ONCE not visible, make it
+	if [ -z "$SETUP_ONCE" ]; then
+		drush vset "drupal_scripts_string" "foo"
+		drush vset "drupal_scripts_true" "true"
+		drush vset "drupal_scripts_false" "false"
+		drush vset "drupal_scripts_empty" ""
+		drush vset "drupal_scripts_array" $(php -r "echo serialize(array('foo'));")
+	fi
+	export SETUP_ONCE=1
 }
 
 @test "get true/false variable" {

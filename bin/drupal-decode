@@ -2,11 +2,10 @@
 <?php
 # v0.1
 # 22.02.2015
-# 07.03.2015 - добавлена поддержка массивов и использование в потоке bash
-# Пример: drupal-sql "SELECT data FROM cache_menu LIMIT 1" | drupal-decode
+# 07.03.2015 - arrays print and input pipes
 
-function script_usage(){
-	echo "drupal-decode v0.1
+function script_usage() {
+  echo "drupal-decode v0.1
 
 Decode serialized values from Drupal database.
 Can decode variables and arrays.
@@ -18,29 +17,33 @@ Usage: drupal-decode \"serialized_string\"
 ";
 }
 
-if(isset($argv[1]) && $argv[1]=='--help'){
-	script_usage();
-	exit(1);
+if (isset($argv[1]) && $argv[1] == '--help') {
+  script_usage();
+  exit(1);
 }
 
-if(isset($argv[1])){
-	$serialized = $argv[1];
+if (isset($argv[1])) {
+  $serialized = $argv[1];
 }
-else{
-	$serialized = trim(fgets(STDIN));
+else {
+  $serialized = trim(fgets(STDIN));
 }
 
 $val = @unserialize($serialized);
-if($val===false && $serialized!='b:0;'){
-	fwrite(STDERR, "'$serialized' is not serialized string.\n");
-	exit(1);
+if ($val === FALSE && $serialized != 'b:0;') {
+  fwrite(STDERR, "'$serialized' is not serialized string.\n");
+  exit(1);
 }
 
-if(is_array($val)){
-	print_r($val);
+if (is_array($val)) {
+  print_r($val);
 }
-else{
-	if($val===false) $val = 0;
-	if($val===true) $val = 1;
-	echo $val."\n";
+else {
+  if ($val === FALSE) {
+    $val = 0;
+  }
+  if ($val === TRUE) {
+    $val = 1;
+  }
+  echo $val . "\n";
 }

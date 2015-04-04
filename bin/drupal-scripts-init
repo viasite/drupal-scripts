@@ -10,69 +10,73 @@ SCRIPT_FORCE=""
 SCRIPT_VERBOSE=""
 
 if [ -z "$DRUPAL_SCRIPTS_TEST" ]; then
-    [ -r /etc/drupal-scripts.conf ] && . /etc/drupal-scripts.conf
-    [ -r ~/.drupal-scripts.conf ] && . ~/.drupal-scripts.conf
+	[ -r /etc/drupal-scripts.conf ] && . /etc/drupal-scripts.conf
+	[ -r ~/.drupal-scripts.conf ] && . ~/.drupal-scripts.conf
 else
-    DRUPAL_SCRIPTS_ROOT="$DRUPAL_SCRIPTS_ROOT_TEST"
-    . "$DRUPAL_SCRIPTS_ROOT"/drupal-scripts.conf.example
-    DRUPAL_SCRIPTS_ROOT="$DRUPAL_SCRIPTS_ROOT_TEST"
-    USERS_LIST_FILE="$DRUPAL_SCRIPTS_ROOT/$USERS_LIST_FILE"
-    DOCS_FILE="$DRUPAL_SCRIPTS_ROOT/$DOCS_FILE"
+	DRUPAL_SCRIPTS_ROOT="$DRUPAL_SCRIPTS_ROOT_TEST"
+	. "$DRUPAL_SCRIPTS_ROOT"/drupal-scripts.conf.example
+	DRUPAL_SCRIPTS_ROOT="$DRUPAL_SCRIPTS_ROOT_TEST"
+	USERS_LIST_FILE="$DRUPAL_SCRIPTS_ROOT/$USERS_LIST_FILE"
+	DOCS_FILE="$DRUPAL_SCRIPTS_ROOT/$DOCS_FILE"
 fi
 
 function usage {
-    version="$(grep '# \?v[0-9.]\+' -o $0 | tr -d '# ')"
-    script_name="$(basename $0)"
-    echo "$script_name $version"
-    echo "$SCRIPT_HELP" | sed "s/{0}/${script_name}/g"
+	version="$(grep '# \?v[0-9.]\+' -o $0 | tr -d '# ')"
+	script_name="$(basename $0)"
+	echo "$script_name $version"
+	echo "$SCRIPT_HELP" | sed "s/{0}/${script_name}/g"
 }
 
 function is_drupal {
-    [ -r includes/bootstrap.inc ] && echo 1 || echo ""
+	[ -r includes/bootstrap.inc ] && echo 1 || echo ""
 }
 
 function get_domain {
-    echo ${PWD##*/}
+	echo ${PWD##*/}
 }
 
 function check_drush {
-    command -v drush >/dev/null 2>&1 || {
-        echo >&2 "Drush required but it's not installed. Aborting."
-        exit 1
-    }
+	command -v drush >/dev/null 2>&1 || {
+		echo >&2 "Drush required but it's not installed. Aborting."
+		exit 1
+	}
 }
 
 function check_drupal {
-    if [ -z "$(is_drupal)" ]; then
-        echo "Current directory \"$PWD\" is not in Drupal root path, aborting."
-        exit 1
-    fi
+	if [ -z "$(is_drupal)" ]; then
+		echo "Current directory \"$PWD\" is not in Drupal root path, aborting."
+		exit 1
+	fi
 }
 
 while getopts ":fnsvy" opt; do
-    case "$opt" in
-        f) SCRIPT_FORCE="1"
-        ;;
-        n) SCRIPT_ASSUME_NO="1"
-        ;;
-        s) SCRIPT_SIMULATE="1"
-        ;;
-        v) SCRIPT_VERBOSE="1"
-        ;;
-        y) SCRIPT_ASSUME_YES="1"
-        ;;
-    esac
-    shift
+	case "$opt" in
+		f) SCRIPT_FORCE="1"
+		shift
+		;;
+		n) SCRIPT_ASSUME_NO="1"
+		shift
+		;;
+		s) SCRIPT_SIMULATE="1"
+		shift
+		;;
+		v) SCRIPT_VERBOSE="1"
+		shift
+		;;
+		y) SCRIPT_ASSUME_YES="1"
+		shift
+		;;
+	esac
 done
 
 if [ "$1" = "--help" ] && [ "$(basename $0)" = "drupal-scripts-init" ]; then
-    echo "drupal-scripts-init v0.1
+	echo "drupal-scripts-init v0.1
 
 Include file for all scripts. Not used independently."
-    exit 1
+	exit 1
 fi
 
 if [ "$1" = "--help" ] && [ -n "$SCRIPT_HELP" ]; then
-    usage
-    exit 1
+	usage
+	exit 1
 fi

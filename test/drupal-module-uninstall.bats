@@ -2,10 +2,10 @@
 
 setup() {
 	if [ "$(drupal-module-enabled -f node_export)" -ne 1 ]; then
-        drush en -y node_export 2>/dev/null
+		drush en -y node_export
 	fi
 	if [ "$(drupal-module-enabled -f yandex_metrics)" -ne 1 ]; then
-        drush en -y yandex_metrics 2>/dev/null
+		drush en -y yandex_metrics
 	fi
 }
 

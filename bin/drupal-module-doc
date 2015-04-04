@@ -15,22 +15,22 @@ Usage: {0}
 . drupal-scripts-init
 
 if [ ! -r "$DOCS_FILE" ]; then
-    echo "DOCS_FILE $DOCS_FILE not found"
-    exit 1
+	echo "DOCS_FILE $DOCS_FILE not found"
+	exit 1
 fi
 
 module_name="$1"
 if [ -z "$module_name" ]; then
-    cat "$DOCS_FILE"
+	cat "$DOCS_FILE"
 else
-    help=$(grep "\(^\|\/\)$module_name\( -\|$\)" "$DOCS_FILE")
-    if [ -n "$help" ]; then
-        help2=$(grep -w "$module_name" "$DOCS_FILE" | grep -v "\(^\|\/\)$module_name\( -\|$\)")
-    fi
-    if [ -z "$help$help2" ]; then
-        exit 1
-    else
-        if [ -n "$help" ]; then echo "$help"; fi
-        if [ -n "$help2" ]; then echo "$help2"; fi
-    fi
+	help=$(grep "\(^\|\/\)$module_name\( -\|$\)" "$DOCS_FILE")
+	if [ -n "$help" ]; then
+		help2=$(grep -w "$module_name" "$DOCS_FILE" | grep -v "\(^\|\/\)$module_name\( -\|$\)")
+	fi
+	if [ -z "$help$help2" ]; then
+		exit 1
+	else
+		if [ -n "$help" ]; then echo "$help"; fi
+		if [ -n "$help2" ]; then echo "$help2"; fi
+	fi
 fi

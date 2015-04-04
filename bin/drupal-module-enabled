@@ -17,7 +17,7 @@ check_drupal
 module_name="$1"
 #drupal-sql "SELECT COUNT(*) FROM system WHERE name='$module_name' AND type = 'module' AND status=1"
 if [ -n "$SCRIPT_FORCE" ]; then
-    drupal-modules-enabled -f | grep -xc "$module_name"
+	drupal-modules-enabled -f | grep -xc "$module_name"
 else
-    drupal-modules-enabled | grep -xc "$module_name"
+	drupal-modules-enabled | grep -xc "$module_name"
 fi
