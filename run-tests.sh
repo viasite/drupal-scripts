@@ -16,10 +16,14 @@ cd "$DRUPAL_SCRIPTS_ROOT_TEST"
 export TEST_ROOT_PATH="$1"
 
 if [ -z "$TEST_ROOT_PATH" ]; then
-	echo >&2 "TEST_ROOT_PATH not defined, aborting tests."
-	echo >&2 "Usage: run-tests.sh TEST_ROOT_PATH"
-	echo >&2 ""
-	echo >&2 "TEST_ROOT_PATH - path to test Drupal installation. Don't test on production site!"
+	echo >&2 "TEST_ROOT_PATH not defined, aborting tests.
+Usage: run-tests.sh TEST_ROOT_PATH
+
+TEST_ROOT_PATH - path to test Drupal installation. Don't test on production site!
+
+Tests makes:
+ - modules installation
+"
 	exit 1
 fi
 
@@ -30,4 +34,10 @@ if [ -z "$(is_drupal)" ]; then
 	exit 1
 fi
 
-bats "$DRUPAL_SCRIPTS_ROOT"/test
+test_module="$2"
+test_path="$DRUPAL_SCRIPTS_ROOT/test/$test_module.bats"
+if [ -n "$test_module" ] && [ -r "$test_path" ]; then
+	bats "$test_path"
+else
+	bats "$DRUPAL_SCRIPTS_ROOT/test"
+fi
