@@ -45,4 +45,3 @@ setup() {
 	[ $status -eq 0 ]
 	[ "$output" -eq 0 ]
 }
-

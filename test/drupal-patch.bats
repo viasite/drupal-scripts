@@ -54,4 +54,3 @@ teardown() {
 	run drupal-patch
 	[ $status -eq 0 ]
 }
-

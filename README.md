@@ -24,24 +24,21 @@ sh install.sh /usr/local
 # Scripts docs
 See [scripts docs](docs/scripts.md)
 
-
-
-
-
-
 # TODO
 ## v0.1
 - [x] move shared code to drupal-scripts-init
 - [x] replace $(basename $PWD) to get_domain
 - [x] write tests
 - [x] write docs and move to /docs
-- [ ] spaces to tabs
+- [x] spaces to tabs
 
 ## v0.2
-- [ ] global version
 - [ ] installer: rewrite drupal scripts root in conf.example
+- [ ] global version
+- [ ] setup once in tests
 - [ ] correct exit codes
 - [ ] drupal-module-enabled: check directory exists
 - [ ] drupal-module-enabled: multicheck
 - [ ] drupal-modules-undoc: more precise check for undoc
 - [ ] drupal-sql: add host and port to connect string
+- [ ] drupal-scripts wrapper
