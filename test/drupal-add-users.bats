@@ -10,7 +10,7 @@ password=$(echo "$user_line" | cut -d' ' -f3)
 	run drs add-users
 	echo "$output"
 	[ $status -eq 1 ]
-	[ $(expr "${lines[0]}" : "drupal-add-users") -ne 0 ]
+	[ $(expr "${lines[0]}" : "drs add-users") -ne 0 ]
 }
 
 @test "add single user" {

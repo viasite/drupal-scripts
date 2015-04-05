@@ -1,7 +1,6 @@
 #!/usr/bin/env bats
 
 @test "drs" {
-	skip
 	run drs
 	[ $status -eq 1 ]
 }

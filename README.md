@@ -31,16 +31,18 @@ See [commands docs](docs/commands.md)
 - [x] write tests
 - [x] write docs and move to /docs
 - [x] spaces to tabs
+- [x] drs sql: add host and port to connect string
 
 ## v0.2
 - [x] move commands to subdir
+- [x] drs wrapper
+- [x] installer: rewrite drupal scripts root in conf.example
+- [ ] correct exit codes
 - [ ] move all errors to stderr
-- [ ] installer: rewrite drupal scripts root in conf.example
+
+## v0.3
 - [ ] global version
 - [ ] setup once in tests
-- [ ] correct exit codes
-- [ ] drupal-module-enabled: check directory exists
-- [ ] drupal-module-enabled: multicheck
-- [ ] drupal-modules-undoc: more precise check for undoc
-- [ ] drupal-sql: add host and port to connect string
-- [ ] drupal-scripts wrapper
+- [ ] drs module-enabled: check directory exists
+- [ ] drs module-enabled: multicheck
+- [ ] drs modules-undoc: more precise check for undoc
