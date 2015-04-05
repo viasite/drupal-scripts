@@ -12,7 +12,7 @@ Usage: {0}
        {0} module_name
         - output lines about module"
 
-. drupal-scripts-init
+. $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
 
 if [ ! -r "$DOCS_FILE" ]; then
 	echo "DOCS_FILE $DOCS_FILE not found"

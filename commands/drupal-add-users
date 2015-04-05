@@ -22,7 +22,7 @@ Usage: {0} email
           file in format:
           email [role] [password]"
 
-. drupal-scripts-init
+. $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
 
 if [ $# = 0 ]; then
 	usage

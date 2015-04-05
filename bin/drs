@@ -1,0 +1,66 @@
+#!/bin/bash
+# 05.04.2015
+# v0.1
+
+SCRIPT_HELP="
+Drupal script wrapper.
+
+Usage: {0} command [options]
+        - execute command
+
+       {0} help
+        - list all commands
+
+       {0} help command
+        - show command help"
+
+
+[ -r /etc/drupal-scripts.conf ] && . /etc/drupal-scripts.conf
+[ -r ~/.drupal-scripts.conf ] && . ~/.drupal-scripts.conf
+. "$DRUPAL_SCRIPTS_ROOT/lib/drupal-scripts-init"
+
+if [ $# = 0 ]; then
+	usage
+	exit 1
+fi
+
+function find_command(){
+	if [ -r "$DRUPAL_SCRIPTS_ROOT/commands/drupal-$1" ]; then
+		echo "$DRUPAL_SCRIPTS_ROOT/commands/drupal-$1"
+	else
+		return 1
+	fi
+}
+
+function script_help(){
+	command_path=$(find_command "$1")
+	if [ -n "$command_path" ]; then
+		$command_path --help
+		exit 1
+	else
+		cmds=$(find "$DRUPAL_SCRIPTS_ROOT/commands" -maxdepth 1 -type f -name "drupal-*" | sort)
+		#echo find "$DRUPAL_SCRIPTS_ROOT/bin" -maxdepth 0 -type f -name "drupal-*"
+
+		for cmd in $cmds; do
+			text=$($cmd --help | tail -n +3 | head -n1)
+			printf "%-25s %s\n" "$(echo $(basename "$cmd") | sed 's/drupal-//g')" "$text"
+		done
+	fi
+}
+
+if [ "$1" = "help" ]; then
+	script_help "$2"
+	exit 1
+fi
+
+command_name="$1"
+command_path=$(find_command "$command_name")
+
+
+if [ $? -ne 0 ]; then
+	echo >&2 "command '$command_name' not found"
+	exit 1
+fi
+
+shift
+$command_path "$@"

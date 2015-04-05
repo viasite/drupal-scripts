@@ -9,7 +9,7 @@ Apply patch.
 
 Usage: {0} (path_file|path_url)"
 
-. drupal-scripts-init
+. $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
 
 check_drupal
 

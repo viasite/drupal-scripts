@@ -6,15 +6,16 @@ login=$(echo "$user_line" | cut -d' ' -f1)
 role=$(echo "$user_line" | cut -d' ' -f2)
 password=$(echo "$user_line" | cut -d' ' -f3)
 
-@test "drupal-add-users without arguments" {
-	run drupal-add-users
+@test "drs add-users without arguments" {
+	run drs add-users
+	echo "$output"
 	[ $status -eq 1 ]
 	[ $(expr "${lines[0]}" : "drupal-add-users") -ne 0 ]
 }
 
 @test "add single user" {
 	run drush ucan -y "$login"
-	run drupal-add-users "$login"
+	run drs add-users "$login"
 	[ $status -eq 0 ]
 	run drush uinf "$login"
 	[ $status -eq 0 ]
@@ -22,8 +23,8 @@ password=$(echo "$user_line" | cut -d' ' -f3)
 
 @test "add single existing user" {
 	run drush ucan -y "$login"
-	run drupal-add-users "$login"
-	run drupal-add-users "$login"
+	run drs add-users "$login"
+	run drs add-users "$login"
 	[ $status -eq 0 ]
 	[ $(expr "${lines[0]}" : "$login exists") -ne 0 ]
 }
@@ -31,7 +32,7 @@ password=$(echo "$user_line" | cut -d' ' -f3)
 @test "add single user with role" {
 	run drush ucan -y "$login"
 	run drush role-create -y "$role"
-	run drupal-add-users "$login" "$role"
+	run drs add-users "$login" "$role"
 	[ $status -eq 0 ]
 	run drush uinf "$login"
 	[ $status -eq 0 ]
@@ -41,13 +42,13 @@ password=$(echo "$user_line" | cut -d' ' -f3)
 @test "add single user with non-existing role" {
 	run drush ucan -y "$login"
 	run drush role-delete -y "$role"
-	run drupal-add-users "$login" "$role"
+	run drs add-users "$login" "$role"
 	[ $status -eq 0 ]
 	[ $(expr "${lines[0]}" : "There is no role") -ne 0 ]
 }
 
 @test "add users from file" {
-	run drupal-add-users all "$users_file"
+	run drs add-users all "$users_file"
 	[ $status -eq 0 ]
 
 	users_list=""
@@ -60,6 +61,6 @@ password=$(echo "$user_line" | cut -d' ' -f3)
 }
 
 @test "add users from non-existing file" {
-	run drupal-add-users all "${users_file}2"
+	run drs add-users all "${users_file}2"
 	[ $status -eq 1 ]
 }

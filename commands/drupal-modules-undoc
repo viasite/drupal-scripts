@@ -1,0 +1,17 @@
+#!/bin/bash
+# 21.12.2015
+# 24.03.2015
+# v0.1
+
+SCRIPT_HELP="
+List modules without internal documentation."
+
+. $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
+
+check_drupal
+
+for module_name in $(drs modules-enabled); do
+	if [ -z "$(drs module-doc "$module_name")" ]; then
+		echo "$module_name"
+	fi
+done

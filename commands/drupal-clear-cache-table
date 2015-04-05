@@ -8,7 +8,7 @@ Delete only expired cache.
 
 Usage: {0} cache_table_name"
 
-. drupal-scripts-init
+. $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
 
 check_drupal
 
@@ -19,9 +19,9 @@ fi
 
 cache_table="$1"
 if [ -z $(echo "$cache_table" | grep "^cache_") ]; then
-	echo "$cache_table not cache table!"
+	echo >&2 "$cache_table not cache table!"
 	exit 1
 fi
 
-drupal-sql "DELETE FROM {${cache_table}} WHERE expire<UNIX_TIMESTAMP()" > /dev/null
-drupal-sql "OPTIMIZE TABLE {${cache_table}}" > /dev/null
+drs sql "DELETE FROM {${cache_table}} WHERE expire<UNIX_TIMESTAMP()" > /dev/null
+drs sql "OPTIMIZE TABLE {${cache_table}}" > /dev/null

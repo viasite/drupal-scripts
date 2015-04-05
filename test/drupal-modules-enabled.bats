@@ -5,7 +5,7 @@ setup() {
 }
 
 @test "get all modules" {
-	run drupal-modules-enabled -f
+	run drs modules-enabled -f
 	[ $status -eq 0 ]
 	drush_output="$(drush pml --status=enabled --type=module --pipe | sort)"
 	run diff <(echo "$output") <(echo "$drush_output")
@@ -14,12 +14,12 @@ setup() {
 
 @test "check cache" {
 	drush en -y yandex_metrics
-	run drupal-modules-enabled -f
+	run drs modules-enabled -f
 	output1="$output"
 	[ $status -eq 0 ]
 
 	drush dis -y yandex_metrics
-	run drupal-modules-enabled -f
+	run drs modules-enabled -f
 	[ $status -eq 0 ]
 	run diff <(echo "$output") <(echo "$output1")
 	echo >&2 ""

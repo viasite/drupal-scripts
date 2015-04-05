@@ -3,7 +3,7 @@
 # v0.2
 # removed drush for speedup
 
-#v0.1
+# old version 0.1
 #val=$(drush vget "$1" --exact 2>&1 | grep "^$1: " | cut -d':' -f2 | tr -d ' ' | sed "s/'//g" | grep -v ERROR)
 #if [ -z "$val" ]; then val=0; fi
 #echo $val
@@ -14,15 +14,20 @@ Same as drush vget, but faster.
 
 Usage: {0} var_name"
 
-. drupal-scripts-init
+. $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
+
+if [ $# = 0 ]; then
+	usage
+	exit 1
+fi
 
 check_drupal
 
 check_sql="SELECT COUNT(*) FROM {variable} WHERE name='$1'"
 if [ -n "$SCRIPT_VERBOSE" ]; then
-	result=$(drupal-sql -v "$check_sql")
+	result=$(drs sql -v "$check_sql")
 else
-	result=$(drupal-sql "$check_sql")
+	result=$(drs sql "$check_sql")
 fi
 
 if [ "$result" -eq 0 ]; then
@@ -32,9 +37,9 @@ fi
 
 sql="SELECT value FROM {variable} WHERE name='$1'"
 if [ -n "$SCRIPT_VERBOSE" ]; then
-	result=$(drupal-sql -v "$sql")
+	result=$(drs sql -v "$sql")
 else
-	result=$(drupal-sql "$sql")
+	result=$(drs sql "$sql")
 fi
 
 if [ $? -ne 0 ]; then
@@ -43,7 +48,7 @@ if [ $? -ne 0 ]; then
 fi
 
 if [ -n "$result" ]; then
-	result=$(drupal-decode "$result")
+	result=$(drs decode "$result")
 fi
 if [ "$result" = "true" ]; then result=1; fi
 if [ "$result" = "false" ]; then result=0; fi

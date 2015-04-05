@@ -21,7 +21,7 @@ teardown() {
 }
 
 @test "patch without parameters" {
-	run drupal-patch
+	run drs patch
 	[ $status -eq 1 ]
 }
 
@@ -34,7 +34,7 @@ teardown() {
 }
 
 @test "patch success" {
-	run drupal-patch "$diff_file"
+	run drs patch "$diff_file"
 	echo >&2 "$output"
 	[ $status -eq 0 ]
 	run diff "$file_to_patch" "$file_patched"
@@ -42,15 +42,15 @@ teardown() {
 }
 
 @test "patch failed" {
-	run drupal-patch "$diff_file"
+	run drs patch "$diff_file"
 	[ $status -eq 0 ]
-	run drupal-patch "$diff_file"
+	run drs patch "$diff_file"
 	echo >&2 "$output"
 	[ $status -eq 1 ]
 }
 
 @test "patch from url" {
 	skip "how to run test server?"
-	run drupal-patch
+	run drs patch
 	[ $status -eq 0 ]
 }

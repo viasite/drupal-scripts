@@ -17,15 +17,15 @@ teardown() {
 }
 
 @test "add cron to new user" {
-	run drupal-cron-add
+	run drs cron-add
 	[ $status -eq 0 ]
 	[ $(crontab -l -u "$test_user" | wc -l) -eq 1 ]
 }
 
 @test "duplicate add to cron" {
-	run drupal-cron-add
+	run drs cron-add
 	[ $status -eq 0 ]
-	run drupal-cron-add
+	run drs cron-add
 	[ $status -eq 1 ]
 	[ $(crontab -l -u "$test_user" | wc -l) -eq 1 ]
 }

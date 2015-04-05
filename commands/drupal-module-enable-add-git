@@ -7,7 +7,7 @@ Install module, commit module to git.
 
 Usage: {0} module_name [git_comment]"
 
-. drupal-scripts-init
+. $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
 
 check_drush
 check_drupal

@@ -11,11 +11,11 @@ Usage: {0} table_name
 
 Output 0 if error occured."
 
-. drupal-scripts-init
+. $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
 
 check_drupal
 
-count=$(drupal-sql "SELECT COUNT(*) FROM {$1}")
+count=$(drs sql "SELECT COUNT(*) FROM {$1}")
 if [ "$count" = "error" ]; then
 	echo 0;
 	exit 1

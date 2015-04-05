@@ -1,25 +1,25 @@
 #!/usr/bin/env bats
 
 @test "list all docs" {
-	run drupal-module-doc
+	run drs module-doc
 	[ $status -eq 0 ]
 	[ $(echo "$output" | wc -l) = 5 ]
 }
 
 @test "list one module" {
-	run drupal-module-doc devel
+	run drs module-doc devel
 	[ $status -eq 0 ]
 	[ $(echo "$output" | wc -l) = 1 ]
 }
 
 @test "list module with references" {
-	run drupal-module-doc field_collection
+	run drs module-doc field_collection
 	[ $status -eq 0 ]
 	[ $(echo "$output" | wc -l) = 2 ]
 }
 
 @test "list undoc module" {
-	run drupal-module-doc foo
+	run drs module-doc foo
 	[ $status -eq 1 ]
 	echo >&2 "\"$output\""
 	echo >&2 $(echo "$output" | wc -l)

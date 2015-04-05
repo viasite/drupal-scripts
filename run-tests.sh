@@ -11,7 +11,7 @@ command -v bats >/dev/null 2>&1 || {
 export DRUPAL_SCRIPTS_ROOT_TEST=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 cd "$DRUPAL_SCRIPTS_ROOT_TEST"
 
-. bin/drupal-scripts-init
+. lib/drupal-scripts-init
 
 export TEST_ROOT_PATH="$1"
 

@@ -13,7 +13,7 @@ Cache time defines in minutes, from MODULES_CACHE_TIME in config, default 10 min
 Options:
     -f Force check module, without cache"
 
-. drupal-scripts-init
+. $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
 
 check_drupal
 
@@ -32,7 +32,7 @@ if [ -z "$SCRIPT_FORCE" ] && [ -f "$cache_file" ] && [ $(find "$cache_file" -mmi
 	exit 0
 fi
 
-modules=$(drupal-sql "SELECT name FROM {system} WHERE type = 'module' AND status=1 AND filename NOT LIKE '%.profile' ORDER BY name")
+modules=$(drs sql "SELECT name FROM {system} WHERE type = 'module' AND status=1 AND filename NOT LIKE '%.profile' ORDER BY name")
 
 > "$cache_file"
 user=$(stat -c '%U' $PWD)

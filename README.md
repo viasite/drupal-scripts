@@ -6,11 +6,11 @@ Main purposes:
 - quickly get information across many Drupal sites in server
 - bulk operations with Drupal sites
 
-All scripts should run from drupal site root_path.
+All commands should run from drupal site root_path.
 
-Some scripts expects that contrib modules place in sites/all/modules.
+Some commands expects that contrib modules place in sites/all/modules.
 
-Some scripts has same functions as drush commands but not initializes drupal bootstrap (50-300 msec faster execution)
+Some commands has same functions as drush commands but not initializes drupal bootstrap (50-300 msec faster execution)
 
 Tested on Debian Squeeze and Ubuntu 14.04.
 
@@ -21,8 +21,8 @@ Tested on Debian Squeeze and Ubuntu 14.04.
 # Install
 sh install.sh /usr/local
 
-# Scripts docs
-See [scripts docs](docs/scripts.md)
+# Commands docs
+See [commands docs](docs/commands.md)
 
 # TODO
 ## v0.1
@@ -33,6 +33,8 @@ See [scripts docs](docs/scripts.md)
 - [x] spaces to tabs
 
 ## v0.2
+- [x] move commands to subdir
+- [ ] move all errors to stderr
 - [ ] installer: rewrite drupal scripts root in conf.example
 - [ ] global version
 - [ ] setup once in tests

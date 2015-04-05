@@ -1,5 +1,19 @@
-# Drupal scripts docs
-## drupal-add-users
+drs v0.1
+
+Drupal script wrapper.
+
+Usage: drs command [options]
+        - execute command
+
+       drs help
+        - list all commands
+
+       drs help command
+        - show command help
+
+# drs commands
+
+## drs add-users
 Add users to Drupal in current directory via Drush.  
 If password not defined, it will be generated.  
 login=email  
@@ -16,24 +30,24 @@ Usage: drupal-add-users email
           email [role] [password]  
 
 
-## drupal-block-timings
+## drs block-timings
 Shows block load time for each block in Drupal.  
 Columns: block,time,theme,region  
 
 
-## drupal-bootstrap-timings
+## drs bootstrap-timings
 Shows Drupal bootstrap load timings.  
 Each time shows bootstrap from previous level.  
 
 
-## drupal-clear-cache-table
+## drs clear-cache-table
 Cleans cache_ table and optimize it.  
 Delete only expired cache.  
   
 Usage: drupal-clear-cache-table cache_table_name  
 
 
-## drupal-cron-add
+## drs cron-add
 Add drupal-cron-run to user system cron.  
   
 Cron job runs in random minute every 3 hours.  
@@ -43,7 +57,7 @@ Options:
         -s Simulate mode, don't actually change the system  
 
 
-## drupal-cron-run
+## drs cron-run
 Run Drush cron in correct environment.  
   
 Usage: drupal-cron-run root_path  
@@ -58,13 +72,13 @@ Usage: drupal-cron-run root_path
           Default domain - basename of root_path  
 
 
-## drupal-database-settings
+## drs database-settings
 Shows database credentials from settings.php.  
   
 Usage: drupal-database-settings (database|username|password|prefix|host|port)  
 
 
-## drupal-decode
+## drs decode
 Decode serialized values from Drupal database.  
 Can decode variables and arrays.  
 true decodes as 1 and false as 0.  
@@ -74,7 +88,7 @@ Usage: drupal-decode "serialized_string"
        echo "serialized_string" | drupal-decode  
 
 
-## drupal-module-doc
+## drs module-doc
 Show module brief module info from custom file with internal documentation.  
   
 Usage: drupal-module-doc  
@@ -84,13 +98,13 @@ Usage: drupal-module-doc
         - output lines about module  
 
 
-## drupal-module-enable-add-git
+## drs module-enable-add-git
 Install module, commit module to git.  
   
 Usage: drupal-module-enable-add-git module_name [git_comment]  
 
 
-## drupal-module-enabled
+## drs module-enabled
 Check module status.  
 Same as drush pml --status=enabled --type=module, but faster.  
 Outputs 1 or 0.  
@@ -99,7 +113,7 @@ Options:
     -f Force check module, without cache  
 
 
-## drupal-modules-enabled
+## drs modules-enabled
 List enabled modules.  
 Same as drush pml --status=enabled --type=module --pipe,  
 but faster and with cache.  
@@ -109,11 +123,11 @@ Options:
     -f Force check module, without cache  
 
 
-## drupal-modules-undoc
+## drs modules-undoc
 List modules without internal documentation.  
 
 
-## drupal-module-uninstall
+## drs module-uninstall
 Disable and uninstall module via Drush, then remove module directory with confirmation.  
 Working only for modules in sites/all  
   
@@ -124,21 +138,17 @@ Options:
     -n Assume no on delete directory confirmation  
 
 
-## drupal-module-version
+## drs module-version
 Show module version.  
 
 
-## drupal-patch
+## drs patch
 Apply patch.  
   
 Usage: drupal-patch (path_file|path_url)  
 
 
-## drupal-scripts-init
-Include file for all scripts. Not used independently.  
-
-
-## drupal-sql
+## drs sql
 Execute sql query.  
 Same as drush sql-query, but faster.  
   
@@ -153,7 +163,7 @@ Options:
     -v Verbose mode, output sql and connection parameters, explain sql errors  
 
 
-## drupal-table-count
+## drs table-count
 Show count rows from table.  
 Same as drupal-sql "SELECT COUNT(*) FROM {table_name}".  
   
@@ -162,8 +172,7 @@ Usage: drupal-table-count table_name
 Output 0 if error occured.  
 
 
-## drupal-vget
-  
+## drs vget
 Show Drupal variable.  
 Same as drush vget, but faster.  
   

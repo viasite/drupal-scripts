@@ -6,42 +6,42 @@ setup() {
 }
 
 @test "decode help" {
-	run drupal-decode --help
+	run drs decode --help
 	[ $status -eq 1 ]
 }
 
 @test "decode variable" {
-	run drupal-decode $(php -r "echo serialize('1');")
+	run drs decode $(php -r "echo serialize('1');")
 	[ $status -eq 0 ]
 	[ "$output" -eq 1 ]
 }
 
 @test "decode array" {
-	run drupal-decode $(php -r "echo serialize(array('1'));")
+	run drs decode $(php -r "echo serialize(array('1'));")
 	[ $status -eq 0 ]
 	[ $(expr "${lines[0]}" : "Array") -ne 0 ]
 }
 
 @test "pipe decode" {
-	run bash -c "php -r \"echo serialize('1');\" | drupal-decode"
+	run bash -c "php -r \"echo serialize('1');\" | drs decode"
 	[ $status -eq 0 ]
 	[ "$output" -eq 1 ]
 }
 
 @test "decode non-serialized string" {
-	run drupal-decode 1
+	run drs decode 1
 	[ $status -eq 1 ]
 	#[ "$output" -eq 1 ]
 }
 
 @test "decode true" {
-	run drupal-decode $(php -r "echo serialize(true);")
+	run drs decode $(php -r "echo serialize(true);")
 	[ $status -eq 0 ]
 	[ "$output" -eq 1 ]
 }
 
 @test "decode false" {
-	run drupal-decode $(php -r "echo serialize(false);")
+	run drs decode $(php -r "echo serialize(false);")
 	[ $status -eq 0 ]
 	[ "$output" -eq 0 ]
 }

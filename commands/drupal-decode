@@ -12,8 +12,8 @@ Can decode variables and arrays.
 true decodes as 1 and false as 0.
 Arrays decodes as print_r.
 
-Usage: drupal-decode \"serialized_string\"
-       echo \"serialized_string\" | drupal-decode
+Usage: drs decode \"serialized_string\"
+       echo \"serialized_string\" | drs decode
 ";
 }
 

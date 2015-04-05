@@ -17,7 +17,7 @@ Output \"error\" if error occured.
 Options:
     -v Verbose mode, output sql and connection parameters, explain sql errors"
 
-. drupal-scripts-init
+. $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
 
 check_drupal
 
@@ -27,7 +27,7 @@ if [ $# = 0 ]; then
 fi
 
 function s(){
-	drupal-database-settings "$1"
+	drs database-settings "$1"
 }
 
 function sql(){
