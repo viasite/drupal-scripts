@@ -32,7 +32,7 @@ if [ -d "$INSTALL_DIR" ]; then
 	echo ""
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
 		rm -r "$INSTALL_DIR"
-		[ -f "$BIN_PATH"/drs ] && rm "$BIN_PATH"/drs
+		[ -h "$BIN_PATH"/drs ] && rm "$BIN_PATH"/drs
 	else
 		echo >&2 "Aborting installation."
 		exit 1
