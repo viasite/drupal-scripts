@@ -58,7 +58,7 @@ function add_user {
 		fi
 		echo -e "$(get_domain) - ${login}\n${password}\n" >> "$temp_file"
 	else
-		echo >&2 "$login exists"
+		echo >&2 "username $login exists"
 	fi
 }
 

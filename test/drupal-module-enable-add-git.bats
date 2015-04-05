@@ -14,11 +14,11 @@ teardown() {
 	mv .git_test .git
 }
 
-
 @test "enable and commit module" {
 	drush dis -y yandex_metrics
 	run drs module-enable-add-git yandex_metrics
 	[ $status -eq 0 ]
+
 	run sh -c "git log -n1 --oneline | head -n1"
 	[ $(echo "$output" | grep -c "modules: yandex_metrics") -eq 1 ]
 }
@@ -28,6 +28,7 @@ teardown() {
 	drush dis -y yandex_metrics
 	run drs module-enable-add-git yandex_metrics "$random_comment"
 	[ $status -eq 0 ]
+
 	run sh -c "git log -n1 --oneline | head -n1"
 	[ $(echo "$output" | grep -c "modules: yandex_metrics, $random_comment") -eq 1 ]
 }
@@ -35,6 +36,20 @@ teardown() {
 @test "try to enable enabled module" {
 	run drs module-enable-add-git node
 	[ $status -eq 1 ]
+
 	run sh -c "git log -n1 --oneline | head -n1"
 	[ $(echo "$output" | grep -c "modules: node") -eq 0 ]
+}
+
+@test "try to commit commited module" {
+	drush dis -y yandex_metrics
+	run drs module-enable-add-git yandex_metrics
+	[ $status -eq 0 ]
+
+	drush dis -y yandex_metrics
+	run drs module-enable-add-git yandex_metrics
+	[ $status -ne 0 ]
+
+	run sh -c "git log -n1 --oneline | head -n1"
+	[ $(echo "$output" | grep -c "modules: yandex_metrics") -ne 0 ]
 }

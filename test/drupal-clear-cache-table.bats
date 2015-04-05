@@ -9,6 +9,15 @@
 @test "clear cache_form" {
 	run drs clear-cache-table cache_form
 	[ $status -eq 0 ]
+	[ -z "$output" ]
+}
+
+@test "clear cache_form verbose" {
+	run drs clear-cache-table cache_form
+	[ $status -eq 0 ]
+	run drs clear-cache-table -v cache_form
+	[ $status -eq 0 ]
+	[ "$output" = "cleared 0 rows from cache_form" ]
 }
 
 @test "clear non-cache table" {

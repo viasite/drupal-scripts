@@ -28,6 +28,7 @@ teardown() {
 @test "check test fixtures" {
 	run bash -c 'diff -u "$file_to_patch_orig" "$file_patched" > "$diff_file"'
 	[ $status -eq 1 ]
+
 	run diff "$file_to_patch_orig" "$file_patched"
 	[ $status -eq 1 ]
 	[ "${lines[1]}" = "> $diff_string" ]
@@ -35,8 +36,8 @@ teardown() {
 
 @test "patch success" {
 	run drs patch "$diff_file"
-	echo >&2 "$output"
 	[ $status -eq 0 ]
+
 	run diff "$file_to_patch" "$file_patched"
 	[ $status -eq 0 ]
 }
@@ -44,8 +45,8 @@ teardown() {
 @test "patch failed" {
 	run drs patch "$diff_file"
 	[ $status -eq 0 ]
+
 	run drs patch "$diff_file"
-	echo >&2 "$output"
 	[ $status -eq 1 ]
 }
 

@@ -2,7 +2,7 @@
 
 Shell scripts for Drupal.
 
-Main purposes:
+Main purposes: 20-50 times faster than Drush. 
 - quickly get information across many Drupal sites in server
 - bulk operations with Drupal sites
 
@@ -19,7 +19,7 @@ Tested on Debian Squeeze and Ubuntu 14.04.
 - Drupal 7.x
 
 # Install
-sh install.sh /usr/local
+bash install.sh
 
 # Commands docs
 See [commands docs](docs/commands.md)
@@ -37,12 +37,15 @@ See [commands docs](docs/commands.md)
 - [x] move commands to subdir
 - [x] drs wrapper
 - [x] installer: rewrite drupal scripts root in conf.example
-- [ ] correct exit codes
-- [ ] move all errors to stderr
+- [x] correct exit codes
+- [x] move all errors to stderr
+- [ ] Travis CI
+- [ ] bash autocomplete
 
 ## v0.3
 - [ ] global version
 - [ ] setup once in tests
+- [ ] installer: tests
 - [ ] drs module-enabled: check directory exists
 - [ ] drs module-enabled: multicheck
 - [ ] drs modules-undoc: more precise check for undoc

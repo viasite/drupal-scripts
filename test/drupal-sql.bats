@@ -14,6 +14,7 @@
 }
 
 @test "sql prefix" {
+	# TODO: sql prefix
 	skip "How to check it?"
 	run drs sql
 	[ $status -eq 0 ]
@@ -28,7 +29,6 @@
 
 @test "invalid sql" {
 	run drs sql "SELECT name FROM foo"
-	echo >&2 "$output"
 	[ $status -eq 1 ]
 	[ "$output" = "error" ]
 }

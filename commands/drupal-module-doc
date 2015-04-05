@@ -10,12 +10,19 @@ Usage: {0}
         - output whole docs file
 
        {0} module_name
-        - output lines about module"
+        - output lines about module
+
+       {0} module_name docs_file
+        - output lines about module from docs_file"
 
 . $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
 
+if [ -n "$2" ]; then
+	DOCS_FILE="$2"
+fi
+
 if [ ! -r "$DOCS_FILE" ]; then
-	echo "DOCS_FILE $DOCS_FILE not found"
+	echo >&2 "DOCS_FILE $DOCS_FILE not found"
 	exit 1
 fi
 

@@ -23,8 +23,14 @@ setup() {
 	run drs module-enabled -f yandex_metrics
 	[ $status -eq 0 ]
 	[ "$output" -eq 1 ]
+
 	drush dis -y yandex_metrics
 	run drs module-enabled yandex_metrics
 	[ $status -eq 0 ]
 	[ "$output" -eq 1 ]
+}
+
+@test "check incorrect deleted module" {
+	# TODO: check incorrect deleted module
+	skip
 }

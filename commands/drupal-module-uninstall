@@ -53,8 +53,8 @@ if [ -n "$SCRIPT_ASSUME_YES" ] || [ -n "$SCRIPT_ASSUME_NO" ]; then
 	fi
 else
 	read -p "$rm_command ? " -n 1 -r
-	echo ""
-	if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+	echo >&2 ""
+	if [[ $REPLY =~ ^[Yy]$ ]]; then
 		is_remove="1"
 	fi
 fi

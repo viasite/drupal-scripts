@@ -12,7 +12,10 @@ SCRIPT_HELP="
 Show Drupal variable.
 Same as drush vget, but faster.
 
-Usage: {0} var_name"
+Usage: {0} var_name
+
+Options:
+    -v Verbose mode"
 
 . $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
 
@@ -43,14 +46,11 @@ else
 fi
 
 if [ $? -ne 0 ]; then
-	echo ""
 	exit 1
 fi
 
 if [ -n "$result" ]; then
 	result=$(drs decode "$result")
 fi
-if [ "$result" = "true" ]; then result=1; fi
-if [ "$result" = "false" ]; then result=0; fi
 
 echo "$result"

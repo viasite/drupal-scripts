@@ -32,14 +32,14 @@ else
 fi
 
 if [ ! -f "$patch_name" ]; then
-	echo "patch $patch_name not exists"
+	echo >&2 "patch $patch_name not exists"
 	exit 1
 fi
 
 patch --strip=1 --force --silent --reject-file="$rej_name" < "$patch_name"
 
 if [ $? -ne 0 ]; then
-	echo "patch error"
+	echo >&2 "patch error"
 	exit 1
 fi
 

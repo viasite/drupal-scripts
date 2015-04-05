@@ -7,6 +7,7 @@ setup() {
 @test "get all modules" {
 	run drs modules-enabled -f
 	[ $status -eq 0 ]
+
 	drush_output="$(drush pml --status=enabled --type=module --pipe | sort)"
 	run diff <(echo "$output") <(echo "$drush_output")
 	[ $status -eq 0 ]
@@ -21,9 +22,8 @@ setup() {
 	drush dis -y yandex_metrics
 	run drs modules-enabled -f
 	[ $status -eq 0 ]
+
 	run diff <(echo "$output") <(echo "$output1")
-	echo >&2 ""
-	echo >&2 "$output"
 	[ $status -eq 1 ]
 	[ $(echo "$output" | wc -l) -eq 2 ]
 	[ "${lines[1]}" = "> yandex_metrics" ]

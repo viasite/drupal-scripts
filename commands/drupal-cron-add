@@ -36,13 +36,8 @@ crontab -l -u "$user" > "$temp_file" 2>/dev/null
 cron_command="$DRUPAL_SCRIPTS_BINARY cron-run \"$root_path\""
 
 if [ -n "$(grep "$cron_command" "$temp_file")" ]; then
-	echo "drush was in cron, exit"
-	exit 1
-fi
-
-if [ -z "$(is_drupal)" ]; then
-	echo "$root_path is not drupal root, exit"
-	exit 1
+	echo >&2 "drush was in cron, exit"
+	exit 0
 fi
 
 mins=$(shuf -i 1-59 -n 1)

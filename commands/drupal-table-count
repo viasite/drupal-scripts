@@ -17,7 +17,7 @@ check_drupal
 
 count=$(drs sql "SELECT COUNT(*) FROM {$1}")
 if [ "$count" = "error" ]; then
-	echo 0;
+	echo 0
 	exit 1
 else
 	echo "$count"

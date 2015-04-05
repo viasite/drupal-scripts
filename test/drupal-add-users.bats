@@ -24,9 +24,10 @@ password=$(echo "$user_line" | cut -d' ' -f3)
 @test "add single existing user" {
 	run drush ucan -y "$login"
 	run drs add-users "$login"
+	[ $status -eq 0 ]
 	run drs add-users "$login"
 	[ $status -eq 0 ]
-	[ $(expr "${lines[0]}" : "$login exists") -ne 0 ]
+	[ $(expr "${lines[0]}" : "username $login exists") -ne 0 ]
 }
 
 @test "add single user with role" {

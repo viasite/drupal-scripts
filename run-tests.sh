@@ -36,8 +36,13 @@ fi
 
 test_module="$2"
 test_path="$DRUPAL_SCRIPTS_ROOT/test/$test_module.bats"
-if [ -n "$test_module" ] && [ -r "$test_path" ]; then
-	bats "$test_path"
+if [ -n "$test_module" ]; then
+	if [ -r "$test_path" ]; then
+		bats "$test_path"
+	else
+		echo >&2 "test $test_module not exists, aborting."
+		exit 1
+	fi
 else
 	bats "$DRUPAL_SCRIPTS_ROOT/test"
 fi

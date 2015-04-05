@@ -27,7 +27,9 @@ if [ -f "$cache_file" ] && [ ! -w "$cache_file" ]; then
 	exit 1
 fi
 
-if [ -z "$SCRIPT_FORCE" ] && [ -f "$cache_file" ] && [ $(find "$cache_file" -mmin -${MODULES_CACHE_TIME} | wc -l) = "1" ]; then
+if [ -z "$SCRIPT_FORCE" ] && [ -f "$cache_file" ] \
+&& [ $(find "$cache_file" -mmin -${MODULES_CACHE_TIME} | wc -l) = "1" ]
+then
 	cat "$cache_file"
 	exit 0
 fi
@@ -39,6 +41,10 @@ user=$(stat -c '%U' $PWD)
 if [ "$(whoami)" != "$user" ]; then
 	chown $user:$user "$cache_file"
 	chmod 600 "$cache_file"
+fi
+
+if [ -z "$modules" ]; then
+	exit 1
 fi
 
 for module in "$modules"; do

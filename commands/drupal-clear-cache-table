@@ -6,7 +6,10 @@ SCRIPT_HELP="
 Cleans cache_ table and optimize it.
 Delete only expired cache.
 
-Usage: {0} cache_table_name"
+Usage: {0} cache_table_name
+
+Options:
+    -v Verbose mode"
 
 . $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
 
@@ -23,5 +26,12 @@ if [ -z $(echo "$cache_table" | grep "^cache_") ]; then
 	exit 1
 fi
 
-drs sql "DELETE FROM {${cache_table}} WHERE expire<UNIX_TIMESTAMP()" > /dev/null
-drs sql "OPTIMIZE TABLE {${cache_table}}" > /dev/null
+count=$(drs sql "SELECT COUNT(*) FROM {${cache_table}} WHERE expire<UNIX_TIMESTAMP()")
+if [ "$count" -ne 0 ];then
+	drs sql "DELETE FROM {${cache_table}} WHERE expire<UNIX_TIMESTAMP()"
+	drs sql "OPTIMIZE TABLE {${cache_table}}"
+fi
+
+if [ -n "$SCRIPT_VERBOSE" ]; then
+	echo >&2 "cleared $count rows from $cache_table"
+fi

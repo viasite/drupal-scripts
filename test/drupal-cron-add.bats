@@ -26,6 +26,6 @@ teardown() {
 	run drs cron-add
 	[ $status -eq 0 ]
 	run drs cron-add
-	[ $status -eq 1 ]
+	[ $status -eq 0 ]
 	[ $(crontab -l -u "$test_user" | wc -l) -eq 1 ]
 }
