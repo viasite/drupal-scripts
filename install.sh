@@ -53,5 +53,7 @@ else
 	echo "$USER_CONFIG_PATH exists"
 fi
 
+sed -i 's,DRUPAL_SCRIPTS_ROOT=.*,DRUPAL_SCRIPTS_ROOT="'"$INSTALL_DIR"'",g' "$USER_CONFIG_PATH"
+
 echo "Installed drupal-scripts to $INSTALL_DIR.
 Binary installed to $BIN_PATH/drs"
