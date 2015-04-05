@@ -32,3 +32,19 @@
 	[ $status -eq 1 ]
 	[ "$output" = "error" ]
 }
+
+@test "connect without port" {
+	# TODO: connect without port
+	skip
+	run drs sql "SELECT 1"
+	[ $status -eq 0 ]
+	[ "$output" -eq 1 ]
+}
+
+@test "connect with danger symbols in password" {
+	# TODO: connect with danger symbols in password
+	skip
+	run drs sql "SELECT 1"
+	[ $status -eq 0 ]
+	[ "$output" -eq 1 ]
+}

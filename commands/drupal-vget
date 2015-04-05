@@ -33,6 +33,11 @@ else
 	result=$(drs sql "$check_sql")
 fi
 
+if [ "$result" = "error" ]; then
+	echo >&2 "sql error"
+	exit 1
+fi
+
 if [ "$result" -eq 0 ]; then
 	echo >&2 "variable '$1' not found"
 	exit 1
