@@ -24,6 +24,8 @@ if [ $# = 0 ]; then
 	exit 1
 fi
 
+complete="$2"
+
 function find_command(){
 	if [ -r "$DRUPAL_SCRIPTS_ROOT/commands/drupal-$1" ]; then
 		echo "$DRUPAL_SCRIPTS_ROOT/commands/drupal-$1"
@@ -43,7 +45,12 @@ function script_help(){
 
 		for cmd in $cmds; do
 			text=$($cmd --help | tail -n +3 | head -n1)
-			printf "%-25s %s\n" "$(echo $(basename "$cmd") | sed 's/drupal-//g')" "$text"
+			# "drs help complete" for zsh completion plugin
+			if [ "$complete" = "complete" ]; then
+				printf "%s:%s\n" "$(echo $(basename "$cmd") | sed 's/drupal-//g')" "$text"
+			else
+				printf "%-25s %s\n" "$(echo $(basename "$cmd") | sed 's/drupal-//g')" "$text"
+			fi
 		done
 	fi
 }

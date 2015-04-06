@@ -39,8 +39,8 @@ See [commands docs](docs/commands.md)
 - [x] installer: rewrite drupal scripts root in conf.example
 - [x] correct exit codes
 - [x] move all errors to stderr
+- [x] zsh autocomplete
 - [ ] Travis CI
-- [ ] bash autocomplete
 
 ## v0.3
 - [ ] global version
