@@ -45,7 +45,7 @@ function check_drush {
 
 function check_drupal {
 	if [ -z "$(is_drupal)" ]; then
-		echo "Current directory \"$PWD\" is not Drupal root path, aborting."
+		echo >&2 "Current directory \"$PWD\" is not Drupal root path, aborting."
 		exit 1
 	fi
 }
