@@ -35,9 +35,9 @@ function sql(){
 	sql=$(echo $1 | sed "s/{\(.*\?\)}/${prefix}\1/g")
 	[ -n "$SCRIPT_VERBOSE" ] && echo >&2 "sql: $sql"
 
-	connect_string="-u$(s username) -p$(s password) -h$(s host)"
+	connect_string="-u'$(s username)' -p'$(s password)' -h'$(s host)'"
 	if [ -n "$(s port)" ]; then
-		connect_string="$connect_string -P$(s port)"
+		connect_string="$connect_string -P'$(s port)'"
 	fi
 	connect_string="$connect_string $(s database)"
 
