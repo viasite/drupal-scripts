@@ -30,10 +30,12 @@ install:
   - git clone --depth 1 https://github.com/sstephenson/bats.git
 
   # install drupal-scripts
-  - env
-  - export PATH="./bin:$PATH"
-  - exec ./install.sh -y
+  - export PATH="$HOME/drupal-scripts/bin:$PATH"
+  - exec ./install.sh -y "$HOME"
 
+  - exec whereis drs
+  - ls -l $HOME
+  - cat ~/.drupal-sctipts.conf
 
 before_script:
   # navigate out of module directory to prevent blown stack by recursive module lookup
@@ -53,4 +55,4 @@ before_script:
   #- until netstat -an 2>/dev/null | grep '8080.*LISTEN'; do true; done
 
 #script: drush test-run 'Travis-CI Drupal Module Example' --uri=http://127.0.0.1:8080
-script: exec run-tests.sh travis_ci_drupal_test/drupal --tap
+script: exec ./run-tests.sh travis_ci_drupal_test/drupal --tap
