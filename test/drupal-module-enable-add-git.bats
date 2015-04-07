@@ -1,10 +1,14 @@
 #!/usr/bin/env bats
 
 setup() {
+	echo >&2 1
 	if [ ! -d .git ]; then
+		echo >&2 2
 		git init
 	fi
+	echo >&2 3
 	cp -ar .git .git_test
+	echo >&2 4
 
 	# TODO: rewrite
 	#if [ "$(drs module-enabled -f yandex_metrics)" -eq 1 ]; then
