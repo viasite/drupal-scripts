@@ -5,7 +5,7 @@ setup() {
 	|| [ "$(drs module-enabled -f field_collection)" != 1 ] \
 	|| [ "$(drs module-enabled -f field_collection_views)" != 1 ]
 	then
-		drush en -y devel field_collection field_collection_views
+		drush en -y -q devel field_collection field_collection_views
 	fi
 }
 

@@ -3,11 +3,11 @@
 setup() {
 	# TODO: SETUP_ONCE not visible, make it
 	if [ -z "$SETUP_ONCE" ]; then
-		drush vset "drupal_scripts_string" "foo"
-		drush vset "drupal_scripts_true" "TRUE"
-		drush vset "drupal_scripts_false" "FALSE"
-		drush vset "drupal_scripts_empty" ""
-		drush vset "drupal_scripts_array" $(php -r "echo serialize(array('foo'));")
+		drush vset -q "drupal_scripts_string" "foo"
+		drush vset -q "drupal_scripts_true" "TRUE"
+		drush vset -q "drupal_scripts_false" "FALSE"
+		drush vset -q "drupal_scripts_empty" ""
+		drush vset -q "drupal_scripts_array" $(php -r "echo serialize(array('foo'));")
 	fi
 	export SETUP_ONCE=1
 }

@@ -2,10 +2,10 @@
 
 setup() {
 	if [ "$(drs module-enabled -f node_export)" -ne 1 ]; then
-		drush en -y node_export
+		drush en -y -q node_export
 	fi
 	if [ "$(drs module-enabled -f yandex_metrics)" -ne 1 ]; then
-		drush en -y yandex_metrics
+		drush en -y -q yandex_metrics
 	fi
 }
 
