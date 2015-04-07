@@ -30,11 +30,9 @@ install:
   - git clone --depth 1 https://github.com/sstephenson/bats.git
 
   # install drupal-scripts
-  - pwd >&2
-  - ls -l >&2
-  - ls -l .. >&2
-  - exec install.sh -y
-  - git clone --depth 1 https://github.com/sstephenson/bats.git
+  - env
+  - export PATH="./bin:$PATH"
+  - exec ./install.sh -y
 
 
 before_script:
