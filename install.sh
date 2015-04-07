@@ -1,6 +1,5 @@
 #!/bin/bash
 
-PREFIX="$1"
 DEFAULT_PREFIX="/usr/share"
 BIN_PATH="/usr/local/bin"
 DRUPAL_SCRIPTS_ROOT="$PWD"
@@ -30,6 +29,7 @@ while getopts ":y" opt; do
 	esac
 done
 
+PREFIX="$1"
 if [ ! -d "$PREFIX" ]; then
 	if [ -z "$SCRIPT_ASSUME_YES" ]; then
 		read -p "Install drupal-scripts to $DEFAULT_PREFIX (y/n)? " -n 1 -r
@@ -60,8 +60,8 @@ if [ -d "$INSTALL_DIR" ]; then
 		fi
 	fi
 
-	rm -r "$INSTALL_DIR"
-	[ -h "$BIN_PATH"/drs ] && rm "$BIN_PATH"/drs
+	rm -rf "$INSTALL_DIR"
+	[ -w "$BIN_PATH"/drs ] && [ -h "$BIN_PATH"/drs ] && rm "$BIN_PATH"/drs
 fi
 
 cp -R "$DRUPAL_SCRIPTS_ROOT" "$INSTALL_DIR"
