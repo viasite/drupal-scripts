@@ -35,15 +35,11 @@ function sql(){
 	sql=$(echo $1 | sed "s/{\(.*\?\)}/${prefix}\1/g")
 	[ -n "$SCRIPT_VERBOSE" ] && echo >&2 "sql: $sql"
 
-	connect_string="-u\"$(s username)\" -p\"$(s password)\" -h\"$(s host)\""
-	if [ -n "$(s port)" ]; then
-		connect_string="$connect_string -P\"$(s port)\""
-	fi
-	connect_string="$connect_string \"$(s database)\""
+	connect_string="--user=\"$(s username)\" --password=\"$(s password)\" --host=\"$(s host)\" --port=\"$(s port)\" \"$(s database)\""
 
 	[ -n "$SCRIPT_VERBOSE" ] && echo >&2 "connect: $connect_string"
 
-	mysql -Brs -u"$(s username)" -p"$(s password)" -h"$(s host)" "$(s database)" <<< "$sql"
+	mysql -Brs --user="$(s username)" --password="$(s password)" --host="$(s host)" --port="$(s port)" "$(s database)" <<< "$sql"
 }
 
 function sqlq(){
