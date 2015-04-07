@@ -33,6 +33,7 @@ install:
   # install drupal-scripts
   - export PATH="$HOME/drupal-scripts/bin:$PATH"
   - ./install.sh -y "$HOME"
+  - ls -l $HOME/drupal-scripts/commands
 
   - env
   - ls -l $HOME/drupal-scripts/
