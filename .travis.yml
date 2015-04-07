@@ -33,7 +33,7 @@ install:
   - export PATH="$HOME/drupal-scripts/bin:$PATH"
   - ls -l $HOME
   - ./install.sh -y "$HOME"
-  - cat ~/.drupal-sctipts.conf
+  - cat "$HOME/.drupal-sctipts.conf"
 
   - whereis drs
 
