@@ -43,12 +43,11 @@ if [ ! -d "$PREFIX" ]; then
 	PREFIX="$DEFAULT_PREFIX"
 fi
 
-if [ ! -d "$PREFIX" ]; then
-	usage
+INSTALL_DIR="$PREFIX/drupal-scripts"
+if [ ! -w "$PREFIX" ]; then
+	echo "You cannot write to $INSTALL_DIR, aborting."
 	exit 1
 fi
-
-INSTALL_DIR="$PREFIX/drupal-scripts"
 
 if [ -d "$INSTALL_DIR" ]; then
 	echo "Previous installation detected."
@@ -71,7 +70,9 @@ chmod +x "$INSTALL_DIR"/bin/*
 chmod +x "$INSTALL_DIR"/commands/*
 chmod +x "$INSTALL_DIR"/lib/*
 
-ln -s "$INSTALL_DIR"/bin/drs "$BIN_PATH"
+[ -w "$BIN_PATH" ] \
+&& ln -s "$INSTALL_DIR"/bin/drs "$BIN_PATH" \
+&& echo "Binary installed to $BIN_PATH/drs"
 
 if [ ! -e "$USER_CONFIG_PATH" ]; then
 	cp drupal-scripts.conf.example "$USER_CONFIG_PATH"
@@ -82,5 +83,4 @@ fi
 # replace DRUPAL_SCRIPTS_ROOT path in config
 sed -i 's,DRUPAL_SCRIPTS_ROOT=.*,DRUPAL_SCRIPTS_ROOT="'"$INSTALL_DIR"'",g' "$USER_CONFIG_PATH"
 
-echo "Installed drupal-scripts to $INSTALL_DIR.
-Binary installed to $BIN_PATH/drs"
+echo "Installed drupal-scripts to $INSTALL_DIR."
