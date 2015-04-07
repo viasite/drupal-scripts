@@ -27,7 +27,7 @@ if [ -z $(echo "$cache_table" | grep "^cache_") ]; then
 fi
 
 count=$(drs sql "SELECT COUNT(*) FROM {${cache_table}} WHERE expire<UNIX_TIMESTAMP()")
-if [ "$count" -ne 0 ];then
+if [ "$count" -ne 0 ]; then
 	drs sql "DELETE FROM {${cache_table}} WHERE expire<UNIX_TIMESTAMP()"
 	drs sql "OPTIMIZE TABLE {${cache_table}}"
 fi
