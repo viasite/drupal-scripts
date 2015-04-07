@@ -38,5 +38,5 @@ setup() {
 @test "get database port" {
 	run drs database-settings port
 	[ $status -eq 0 ]
-	[ $(echo "$sql_connect_line" | grep -cw "\-\-port=$output") -eq 1 ]
+	[ -z "$output" ] || [ $(echo "$sql_connect_line" | grep -cw "\-\-port=$output") -eq 1 ]
 }
