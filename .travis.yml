@@ -33,9 +33,10 @@ install:
   - export PATH="$HOME/drupal-scripts/bin:$PATH"
   - ls -l $HOME
   - ./install.sh -y "$HOME"
-
-  - exec whereis drs
   - cat ~/.drupal-sctipts.conf
+
+  - whereis drs
+
 
 before_script:
   # navigate out of module directory to prevent blown stack by recursive module lookup
