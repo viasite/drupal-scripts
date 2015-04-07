@@ -28,16 +28,12 @@ install:
   # install bats
   - git clone --depth 1 https://github.com/sstephenson/bats.git
   - export PATH="$PWD/bats/bin:$PATH"
-  - ls -l $PWD/bats/bin
 
   # install drupal-scripts
   - export PATH="$HOME/drupal-scripts/bin:$PATH"
   - ./install.sh -y "$HOME"
   - ls -l $HOME/drupal-scripts/commands
 
-  - env
-  - ls -l $HOME/drupal-scripts/
-  - echo $(drs --help)
 
 
 before_script:
@@ -60,3 +56,10 @@ before_script:
 
 #script: drush test-run 'Travis-CI Drupal Module Example' --uri=http://127.0.0.1:8080
 script: ./run-tests.sh travis_ci_drupal_test/drupal --tap
+
+after_failure:
+ - env
+ - pwd
+ - ls -l $PWD
+ - drs help
+ - ls -l $HOME/drupal-scripts/
