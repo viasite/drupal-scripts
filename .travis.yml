@@ -45,8 +45,6 @@ before_script:
   #- drush --yes core-quick-drupal --profile=testing --no-server --db-url=mysql://root:@127.0.0.1/travis_ci_drupal_test --enable=simpletest travis_ci_drupal_test
   - php -d sendmail_path=`which true` ~/.composer/vendor/bin/drush.php --yes core-quick-drupal --profile=testing --no-server --db-url=mysql://root:@127.0.0.1/travis_ci_drupal_test --enable=simpletest travis_ci_drupal_test
 
-  - git init
-
   # reference and enable travis_ci_drupal_module_example in build site
   #- ln -s $(readlink -e $(cd -)) travis_ci_drupal_test/drupal/sites/all/modules/travis_ci_drupal_module_example
   #- cd travis_ci_drupal_test/drupal

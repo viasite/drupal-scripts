@@ -7,6 +7,10 @@ setup() {
 	export diff_file="drupal-patch-diff"
 	export diff_string="5bcmjdtjhZSHWVZPxCPvW3T5MPREwGQvyvew4fjttEBmhDWrv674Fzw_wcZBRZdP"
 
+	if [ ! -d .git ]; then
+		git init
+	fi
+
 	cp "$file_to_patch" "$file_to_patch_orig"
 	echo "$diff_string" >> "$file_to_patch"
 	cp "$file_to_patch" "$file_patched"

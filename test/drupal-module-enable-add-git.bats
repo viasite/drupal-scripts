@@ -1,6 +1,9 @@
 #!/usr/bin/env bats
 
 setup() {
+	if [ ! -d .git ]; then
+		git init
+	fi
 	cp -ar .git .git_test
 
 	# TODO: rewrite

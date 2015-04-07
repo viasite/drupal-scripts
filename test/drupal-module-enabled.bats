@@ -5,26 +5,26 @@ setup() {
 }
 
 @test "check enabled module" {
-	drush en -y yandex_metrics
+	drush en -y -q yandex_metrics
 	run drs module-enabled -f yandex_metrics
 	[ $status -eq 0 ]
 	[ "$output" -eq 1 ]
 }
 
 @test "check disabled module" {
-	drush dis -y yandex_metrics
+	drush dis -y -q yandex_metrics
 	run drs module-enabled -f yandex_metrics
 	[ $status -eq 1 ]
 	[ "$output" -eq 0 ]
 }
 
 @test "check cache module" {
-	drush en -y yandex_metrics
+	drush en -y -q yandex_metrics
 	run drs module-enabled -f yandex_metrics
 	[ $status -eq 0 ]
 	[ "$output" -eq 1 ]
 
-	drush dis -y yandex_metrics
+	drush dis -y -q yandex_metrics
 	run drs module-enabled yandex_metrics
 	[ $status -eq 0 ]
 	[ "$output" -eq 1 ]
