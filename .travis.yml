@@ -26,16 +26,17 @@ install:
   - composer global require drush/drush:6.*
 
   # install bats
-  - export PATH="./bats/bin:$PATH"
   - git clone --depth 1 https://github.com/sstephenson/bats.git
+  - export PATH="$PWD/bats/bin:$PATH"
+  - ls -l $PWD/bats/bin
 
   # install drupal-scripts
   - export PATH="$HOME/drupal-scripts/bin:$PATH"
-  - ls -l $HOME
   - ./install.sh -y "$HOME"
-  - cat "$HOME/.drupal-scripts.conf"
 
-  - whereis drs
+  - env
+  - ls -l $HOME/drupal-scripts/
+  - echo $(drs --help)
 
 
 before_script:
