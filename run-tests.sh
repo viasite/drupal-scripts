@@ -18,8 +18,12 @@ export TEST_ROOT_PATH="$1"
 if [ -z "$TEST_ROOT_PATH" ]; then
 	echo >&2 "TEST_ROOT_PATH not defined, aborting tests.
 Usage: run-tests.sh TEST_ROOT_PATH
+       run-tests.sh TEST_ROOT_PATH module_name
+       run-tests.sh TEST_ROOT_PATH --tap
 
 TEST_ROOT_PATH - path to test Drupal installation. Don't test on production site!
+module_name    - filename from /test without \".bats\", ex. code for run test /test/code.bats
+--tap          - tap format output
 
 Tests makes:
  - modules installation
@@ -34,15 +38,20 @@ if [ -z "$(is_drupal)" ]; then
 	exit 1
 fi
 
+options=""
 test_module="$2"
+if [ "$test_module" = "--tap" ]; then
+	test_module=""
+	options="$options --tap"
+fi
 test_path="$DRUPAL_SCRIPTS_ROOT/test/$test_module.bats"
 if [ -n "$test_module" ]; then
 	if [ -r "$test_path" ]; then
-		bats "$test_path"
+		bats $options "$test_path"
 	else
 		echo >&2 "test $test_module not exists, aborting."
 		exit 1
 	fi
 else
-	bats "$DRUPAL_SCRIPTS_ROOT/test"
+	bats $options "$DRUPAL_SCRIPTS_ROOT/test"
 fi
