@@ -1,14 +1,14 @@
 #!/usr/bin/env bats
 
 setup() {
-	echo >&2 1
-	if [ ! -d .git ]; then
-		echo >&2 2
-		git init
-	fi
-	echo >&2 3
-	cp -ar .git .git_test
-	echo >&2 4
+	# TODO: travis freezes on git init
+	#echo >&2 1
+	#if [ ! -d .git ]; then
+	#	echo >&2 2
+	#	git init
+	#fi
+	#echo >&2 3
+	[ -d .git ] && cp -ar .git .git_test
 
 	# TODO: rewrite
 	#if [ "$(drs module-enabled -f yandex_metrics)" -eq 1 ]; then
@@ -17,8 +17,7 @@ setup() {
 }
 
 teardown() {
-	rm -r .git
-	mv .git_test .git
+	[ -d .git ] && rm -r .git && mv .git_test .git
 }
 
 @test "enable and commit module" {
