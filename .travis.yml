@@ -1,4 +1,4 @@
-language: c
+language: php
 
 php:
   - 5.3
@@ -31,10 +31,10 @@ install:
 
   # install drupal-scripts
   - export PATH="$HOME/drupal-scripts/bin:$PATH"
-  - exec ./install.sh -y "$HOME"
+  - ls -l $HOME
+  - ./install.sh -y "$HOME"
 
   - exec whereis drs
-  - ls -l $HOME
   - cat ~/.drupal-sctipts.conf
 
 before_script:
