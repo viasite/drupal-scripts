@@ -11,8 +11,8 @@ mysql:
   username: root
   encoding: utf8
 
-before_install:
-  - sudo apt-get update > /dev/null
+#before_install:
+#  - sudo apt-get update > /dev/null
 
 install:
   # install php packages required for running a web server from drush on php 5.3
@@ -30,6 +30,9 @@ install:
   - git clone --depth 1 https://github.com/sstephenson/bats.git
 
   # install drupal-scripts
+  - pwd
+  - ls -l
+  - ls -l ..
   - exec install.sh -y
   - git clone --depth 1 https://github.com/sstephenson/bats.git
 
