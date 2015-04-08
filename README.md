@@ -14,6 +14,8 @@ Some commands has same functions as drush commands but not initializes drupal bo
 
 Tested on Debian Squeeze and Ubuntu 14.04.
 
+[![Build Status](https://travis-ci.org/popstas/drupal-scripts.svg?branch=0.2)](https://travis-ci.org/popstas/drupal-scripts)
+
 # Requirements
 - Drush
 - Drupal 7.x

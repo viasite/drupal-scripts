@@ -14,7 +14,7 @@ setup() {
 }
 
 @test "check cache" {
-	drush en -y yandex_metrics
+	drush en -y -q yandex_metrics
 	run drs modules-enabled -f
 	output1="$output"
 	[ $status -eq 0 ]

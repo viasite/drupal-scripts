@@ -5,9 +5,11 @@ setup() {
 	temp_file=$(mktemp -t drupal-cron-add-test-XXXX)
 
 	# save crontab
-	crontab -l -u "$test_user" > "$temp_file"
+	if [ -n $(crontab -l -u "$test_user" 2>/dev/null) ]; then
+		crontab -l -u "$test_user" > "$temp_file"
+		cat "" | crontab -u "$test_user" -
+	fi
 	# clean crontab
-	cat "" | crontab -u "$test_user" -
 }
 
 teardown() {

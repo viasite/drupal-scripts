@@ -58,11 +58,11 @@ before_script:
   - git init
 
 #script: drush test-run 'Travis-CI Drupal Module Example' --uri=http://127.0.0.1:8080
-script: ./run-tests.sh travis_ci_drupal_test/drupal
+script: ./run-tests.sh "$HTOME/travis_ci_drupal_test/drupal"
 
 after_failure:
  - env
  - pwd
  - ls -l $PWD
- - drs help
+ - ls -l $HOME
  - ls -l $HOME/drupal-scripts/

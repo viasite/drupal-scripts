@@ -8,7 +8,9 @@ setup() {
 	#	git init
 	#fi
 	#echo >&2 3
-	[ -d .git ] && cp -ar .git .git_test
+	if [ -d .git ]; then
+		cp -ar .git .git_test
+	fi
 
 	# TODO: rewrite
 	#if [ "$(drs module-enabled -f yandex_metrics)" -eq 1 ]; then
