@@ -17,11 +17,11 @@ Tested on Debian Squeeze and Ubuntu 14.04.
 [![Build Status](https://travis-ci.org/popstas/drupal-scripts.svg?branch=0.2)](https://travis-ci.org/popstas/drupal-scripts)
 
 # Requirements
-- Drush
+- Drush 6.x
 - Drupal 7.x
 
 # Install
-bash install.sh
+./install.sh
 
 # Commands docs
 See [commands docs](docs/commands.md)
@@ -51,3 +51,4 @@ See [commands docs](docs/commands.md)
 - [ ] drs module-enabled: check directory exists
 - [ ] drs module-enabled: multicheck
 - [ ] drs modules-undoc: more precise check for undoc
+- [ ] bash multi flags
