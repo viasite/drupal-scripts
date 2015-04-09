@@ -2,12 +2,13 @@
 
 setup() {
 	# TODO: travis freezes on git init
-	#echo >&2 1
 	#if [ ! -d .git ]; then
 	#	echo >&2 2
 	#	git init
 	#fi
-	#echo >&2 3
+	echo >&2 1
+	ls -l .git >&2
+	ls -l . >&2
 	if [ -d .git ]; then
 		cp -ar .git .git_test
 	fi
