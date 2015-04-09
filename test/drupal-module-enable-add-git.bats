@@ -11,8 +11,9 @@ setup() {
 	ls -l . >&2
 	if [ -d .git ]; then
 		true
-		git add .
-		git commit -m "test commit" >&2
+		#git add .
+		#git commit -m "test commit" >&2
+		git status >&2
 		#cp -ar .git .git_test
 	fi
 

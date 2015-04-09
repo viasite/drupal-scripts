@@ -15,5 +15,7 @@ setup() {
 	undoc_expected=$(( $modules_count - 5 ))
 	[ $status -eq 0 ]
 	echo "$output" >&2
+	echo "$modules_count" >&2
+	drs modules-enabled >&2
 	[ $(echo "$output" | wc -l) = "$undoc_expected" ]
 }
