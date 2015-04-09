@@ -10,7 +10,8 @@ setup() {
 	ls -l .git >&2
 	ls -l . >&2
 	if [ -d .git ]; then
-		cp -ar .git .git_test
+		true
+		#cp -ar .git .git_test
 	fi
 
 	# TODO: rewrite
