@@ -11,7 +11,7 @@ setup() {
 		#git add .
 		#git commit -m "test commit" >&2
 		#git status >&2
-		cp -ar .git .git_test
+		#cp -ar .git .git_test
 	fi
 
 	# TODO: rewrite
