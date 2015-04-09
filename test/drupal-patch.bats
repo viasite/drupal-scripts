@@ -43,6 +43,7 @@ teardown() {
 	[ $status -eq 0 ]
 
 	run diff "$file_to_patch" "$file_patched"
+	echo >&2 "$output"
 	[ $status -eq 0 ]
 }
 
@@ -51,6 +52,7 @@ teardown() {
 	[ $status -eq 0 ]
 
 	run drs patch "$diff_file"
+	echo >&2 "$output"
 	[ $status -eq 1 ]
 }
 
