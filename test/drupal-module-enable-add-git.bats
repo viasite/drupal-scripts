@@ -6,15 +6,12 @@ setup() {
 	#	echo >&2 2
 	#	git init
 	#fi
-	echo >&2 1
-	ls -l .git >&2
-	ls -l . >&2
 	if [ -d .git ]; then
 		true
 		#git add .
 		#git commit -m "test commit" >&2
-		git status >&2
-		#cp -ar .git .git_test
+		#git status >&2
+		cp -ar .git .git_test
 	fi
 
 	# TODO: rewrite
@@ -33,7 +30,10 @@ teardown() {
 	run drs module-enable-add-git yandex_metrics
 	[ $status -eq 0 ]
 
+	ls -la . >&2
+
 	run sh -c "git log -n1 --oneline | head -n1"
+	echo >&2 "$output"
 	[ $(echo "$output" | grep -c "modules: yandex_metrics") -eq 1 ]
 }
 
