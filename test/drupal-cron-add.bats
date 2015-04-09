@@ -6,7 +6,6 @@ setup() {
 
 	# save crontab
 	if [ -n "$(crontab -l -u "$test_user" 2>/dev/null)" ]; then
-		echo $(crontab -l -u "$test_user" 2>/dev/null)
 		crontab -l -u "$test_user" > "$temp_file"
 		cat "" | crontab -u "$test_user" -
 	fi
@@ -21,14 +20,12 @@ teardown() {
 
 @test "add cron to new user" {
 	run drs cron-add
-	echo >&2 "$output"
 	[ $status -eq 0 ]
 	[ $(crontab -l -u "$test_user" | wc -l) -eq 1 ]
 }
 
 @test "duplicate add to cron" {
 	run drs cron-add
-	echo >&2 "$output"
 	[ $status -eq 0 ]
 	run drs cron-add
 	[ $status -eq 0 ]
