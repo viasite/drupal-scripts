@@ -5,11 +5,12 @@
 SCRIPT_HELP="
 Copy module from directory.
 
-Usage: {0} /path/to/module_dir
+Usage:
+       {0} /path/to/module_dir
 
 Options:
-    -f Remove exists module
-    -y Assume yes
+       -f Remove exists module
+       -y Assume yes
 "
 
 . $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init

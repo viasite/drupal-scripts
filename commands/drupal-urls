@@ -7,7 +7,8 @@ url_types="sitemap mainpage node"
 SCRIPT_HELP="
 Get urls of site.
 
-Usage: {0} [url_type]
+Usage:
+       {0} [url_type]
 
 url_type - one of: $url_types
 

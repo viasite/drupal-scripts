@@ -9,11 +9,12 @@ SCRIPT_HELP="
 Disable and uninstall module via Drush, then remove module directory with confirmation.
 Working only for modules in sites/all
 
-Usage: {0} module_name
+Usage:
+       {0} module_name
 
 Options:
-    -y Assume yes on delete directory confirmation
-    -n Assume no on delete directory confirmation"
+       -y Assume yes on delete directory confirmation
+       -n Assume no on delete directory confirmation"
 
 . $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
 

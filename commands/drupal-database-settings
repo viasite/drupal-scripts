@@ -10,7 +10,8 @@ function script_usage($commands) {
 
 Shows database credentials from settings.php.
 
-Usage: drs database-settings (" . implode('|', $commands) . ")
+Usage:
+       drs database-settings (" . implode('|', $commands) . ")
 ";
 }
 

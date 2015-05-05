@@ -11,7 +11,9 @@ Add users to Drupal in current directory via Drush.
 If password not defined, it will be generated.
 login=email
 
-Usage: {0} email
+Usage:
+
+       {0} email
         - add new user with login=email and role from USERS_DEFAULT_ROLE in config
 
        {0} email [role=$role] [password=random]

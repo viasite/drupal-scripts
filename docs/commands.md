@@ -2,7 +2,9 @@ drs v0.1
 
 Drupal script wrapper.
 
-Usage: drs command [options]
+Usage:
+
+       drs command [options]
         - execute command
 
        drs help
@@ -18,13 +20,15 @@ Add users to Drupal in current directory via Drush.
 If password not defined, it will be generated.  
 login=email  
   
-Usage: drupal-add-users email  
+Usage:  
+  
+       drs add-users email  
         - add new user with login=email and role from USERS_DEFAULT_ROLE in config  
   
-       drupal-add-users email [role=] [password=random]  
+       drs add-users email [role=] [password=random]  
         - add new user with login=email, defined role and password  
   
-       drupal-add-users all [path/to/file]  
+       drs add-users all [path/to/file]  
         - add all users from file or from USERS_LIST_FILE in config,  
           file in format:  
           email [role] [password]  
@@ -44,7 +48,11 @@ Each time shows bootstrap from previous level.
 Cleans cache_ table and optimize it.  
 Delete only expired cache.  
   
-Usage: drupal-clear-cache-table cache_table_name  
+Usage:  
+       drs clear-cache-table cache_table_name  
+  
+Options:  
+       -v Verbose mode  
 
 
 ## drs cron-add
@@ -60,13 +68,15 @@ Options:
 ## drs cron-run
 Run Drush cron in correct environment.  
   
-Usage: drupal-cron-run root_path  
+Usage:  
+  
+       drs cron-run root_path  
         - run drush cron in root_path  
   
-       drupal-cron-run root_path elysia-cron  
+       drs cron-run root_path elysia-cron  
         - run drush elysia-cron in root_path  
   
-       drupal-cron-run root_path cron domain  
+       drs cron-run root_path cron domain  
         - run drush cron in root_path using domain.  
           Need for override http://default, for simplenews.  
           Default domain - basename of root_path  
@@ -75,7 +85,8 @@ Usage: drupal-cron-run root_path
 ## drs database-settings
 Shows database credentials from settings.php.  
   
-Usage: drupal-database-settings (database|username|password|prefix|host|port)  
+Usage:  
+       drs database-settings (database|username|password|prefix|host|port)  
 
 
 ## drs decode
@@ -84,24 +95,33 @@ Can decode variables and arrays.
 true decodes as 1 and false as 0.  
 Arrays decodes as print_r.  
   
-Usage: drupal-decode "serialized_string"  
-       echo "serialized_string" | drupal-decode  
+Usage:  
+  
+       drs decode "serialized_string"  
+  
+       echo "serialized_string" | drs decode  
 
 
 ## drs module-doc
 Show module brief module info from custom file with internal documentation.  
   
-Usage: drupal-module-doc  
+Usage:  
+  
+       drs module-doc  
         - output whole docs file  
   
-       drupal-module-doc module_name  
+       drs module-doc module_name  
         - output lines about module  
+  
+       drs module-doc module_name docs_file  
+        - output lines about module from docs_file  
 
 
 ## drs module-enable-add-git
 Install module, commit module to git.  
   
-Usage: drupal-module-enable-add-git module_name [git_comment]  
+Usage:  
+       drs module-enable-add-git module_name [git_comment]  
 
 
 ## drs module-enabled
@@ -111,6 +131,18 @@ Outputs 1 or 0.
   
 Options:  
     -f Force check module, without cache  
+
+
+## drs module-install
+Copy module from directory.  
+  
+Usage:  
+       drs module-install /path/to/module_dir  
+  
+Options:  
+       -f Remove exists module  
+       -y Assume yes  
+  
 
 
 ## drs modules-enabled
@@ -131,11 +163,12 @@ List modules without internal documentation.
 Disable and uninstall module via Drush, then remove module directory with confirmation.  
 Working only for modules in sites/all  
   
-Usage: drupal-module-uninstall module_name  
+Usage:  
+       drs module-uninstall module_name  
   
 Options:  
-    -y Assume yes on delete directory confirmation  
-    -n Assume no on delete directory confirmation  
+       -y Assume yes on delete directory confirmation  
+       -n Assume no on delete directory confirmation  
 
 
 ## drs module-version
@@ -145,14 +178,16 @@ Show module version.
 ## drs patch
 Apply patch.  
   
-Usage: drupal-patch (path_file|path_url)  
+Usage:  
+       drs patch (path_file|path_url)  
 
 
 ## drs sql
 Execute sql query.  
 Same as drush sql-query, but faster.  
   
-Usage: drupal-sql "query"  
+Usage:  
+       drs sql "query"  
   
 Table names must be encapsulated in {} if db has prefixes, ex.  
 SELECT COUNT(*) FROM {node}  
@@ -167,15 +202,43 @@ Options:
 Show count rows from table.  
 Same as drupal-sql "SELECT COUNT(*) FROM {table_name}".  
   
-Usage: drupal-table-count table_name  
+Usage:  
+       drs table-count table_name  
   
 Output 0 if error occured.  
+
+
+## drs urls
+Get urls of site.  
+  
+Usage:  
+       drs urls [url_type]  
+  
+url_type - one of: sitemap mainpage node  
+  
+Проходит по всем друпалам, где есть sitemap, прогревает каждую ссылку из карты.  
+Там, где карты нет, прогревает главку.  
+  
+Выбирает с помощью drall, берет только сайты с включенным кешем анонимов.  
+  
+Также проверяет, включен ли модуль xmlsitemap.  
+Если sitemap.xml содержит ссылки на другие sitemap.xml, они будут обработаны рекурсивно.  
+  
+На выходе выдает cached_sites / scanned_sites  
+  
+Options:  
+    -v Verbose mode  
+    -q Quiet mode  
 
 
 ## drs vget
 Show Drupal variable.  
 Same as drush vget, but faster.  
   
-Usage: drupal-vget var_name  
+Usage:  
+       drs vget var_name  
+  
+Options:  
+    -v Verbose mode  
 
 

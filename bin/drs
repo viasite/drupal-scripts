@@ -5,7 +5,9 @@
 SCRIPT_HELP="
 Drupal script wrapper.
 
-Usage: {0} command [options]
+Usage:
+
+       {0} command [options]
         - execute command
 
        {0} help

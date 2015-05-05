@@ -5,7 +5,8 @@
 SCRIPT_HELP="
 Install module, commit module to git.
 
-Usage: {0} module_name [git_comment]"
+Usage:
+       {0} module_name [git_comment]"
 
 . $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
 

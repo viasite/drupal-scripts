@@ -7,7 +7,9 @@
 SCRIPT_HELP="
 Run Drush cron in correct environment.
 
-Usage: {0} root_path
+Usage:
+
+       {0} root_path
         - run drush cron in root_path
 
        {0} root_path elysia-cron

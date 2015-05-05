@@ -12,7 +12,8 @@ SCRIPT_HELP="
 Show Drupal variable.
 Same as drush vget, but faster.
 
-Usage: {0} var_name
+Usage:
+       {0} var_name
 
 Options:
     -v Verbose mode"

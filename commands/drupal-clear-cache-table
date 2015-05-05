@@ -6,10 +6,11 @@ SCRIPT_HELP="
 Cleans cache_ table and optimize it.
 Delete only expired cache.
 
-Usage: {0} cache_table_name
+Usage:
+       {0} cache_table_name
 
 Options:
-    -v Verbose mode"
+       -v Verbose mode"
 
 . $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
 

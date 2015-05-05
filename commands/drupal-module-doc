@@ -6,7 +6,9 @@
 SCRIPT_HELP="
 Show module brief module info from custom file with internal documentation.
 
-Usage: {0}
+Usage:
+
+       {0}
         - output whole docs file
 
        {0} module_name
