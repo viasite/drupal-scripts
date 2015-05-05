@@ -1,0 +1,61 @@
+#!/bin/bash
+# 10.04.2015
+# v0.1
+
+SCRIPT_HELP="
+Copy module from directory.
+
+Usage: {0} /path/to/module_dir
+
+Options:
+    -f Remove exists module
+    -y Assume yes
+"
+
+. $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
+
+if [ $# = 0 ]; then
+	usage
+	exit 1
+fi
+
+check_drupal
+check_drush
+
+src_path="${1%/}"
+
+if [ ! -d "$src_path" ] || [ ! -r "$src_path" ]; then
+	echo >&2 "Source $src_path not exists or not readable"
+	exit 1
+fi
+
+module_name="$(basename "$src_path")"
+
+dest_path="sites/all/modules/$module_name"
+
+if [ -d "$dest_path" ]; then
+	if [ -n "$SCRIPT_FORCE" ]; then
+		if [ -n "$SCRIPT_ASSUME_YES" ]; then
+			[ -n "$SCRIPT_VERBOSE" ] && echo force rm -r "$dest_path"
+			rm -r "$dest_path"
+		else
+			read -p "Overwrite $dest_path (y/n)? " -n 1 -r
+			echo ""
+			if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+				echo "Aborting installation."
+				exit 1
+			fi
+			[ -n "$SCRIPT_VERBOSE" ] && echo confirm rm -r "$dest_path"
+			rm -r "$dest_path"
+		fi
+	else
+		echo >&2 "Module $module_name exists, aborting."
+		exit 1
+	fi
+fi
+
+[ -n "$SCRIPT_VERBOSE" ] && echo cp -r "$src_path" "$dest_path"
+cp -r "$src_path" "$dest_path"
+
+user=$(stat -c '%U' "$PWD")
+chown -R $user:$user "$dest_path"

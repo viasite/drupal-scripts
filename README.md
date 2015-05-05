@@ -43,6 +43,8 @@ See [commands docs](docs/commands.md)
 - [x] move all errors to stderr
 - [x] zsh autocomplete
 - [ ] Travis CI
+- [ ] drupal-module-install tests
+- [ ] drupal-urls tests
 
 ## v0.3
 - [ ] global version
