@@ -1,0 +1,71 @@
+#!/bin/bash
+# 08.04.2015
+# v0.1
+
+url_types="sitemap mainpage node"
+
+SCRIPT_HELP="
+Get urls of site.
+
+Usage: {0} [url_type]
+
+url_type - one of: $url_types
+
+Проходит по всем друпалам, где есть sitemap, прогревает каждую ссылку из карты.
+Там, где карты нет, прогревает главку.
+
+Выбирает с помощью drall, берет только сайты с включенным кешем анонимов.
+
+Также проверяет, включен ли модуль xmlsitemap.
+Если sitemap.xml содержит ссылки на другие sitemap.xml, они будут обработаны рекурсивно.
+
+На выходе выдает cached_sites / scanned_sites
+
+Options:
+    -v Verbose mode
+    -q Quiet mode"
+
+. $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
+
+check_drupal
+
+url_type="$1"
+if [ -z "$url_type" ]; then url_type="mainpage"; fi
+url_function="urls_$url_type"
+
+sitemap_temp=$(mktemp -t drupal-urls-sitemap-XXXX)
+trap 'rm -f "$sitemap_temp"' EXIT
+
+
+urls_mainpage() {
+	echo "http://$(get_domain)"
+}
+
+urls_sitemap() {
+	if [ $(drs module-enabled "xmlsitemap") -eq 0 ]; then
+		echo >&2 "module xmlsitemap not found"
+	fi
+	sitemap_url="http://$(get_domain)/sitemap.xml"
+	sitemap_to_urls "$sitemap_url" "$sitemap_temp"
+	cat "$sitemap_temp"
+}
+
+sitemap_to_urls() {
+	sitemap_url="$1"
+	sitemap_temp="$2"
+
+	for xml_row in $(curl -s "$sitemap_url" | grep "<loc>"); do
+		url=$(echo "$xml_row" | grep -o "http:.*" | cut -d'<' -f1)
+		if [ $(echo "$xml_row" | grep -c "<sitemap>") != 0 ]; then
+			[ -n "$SCRIPT_VERBOSE" ] && echo >&2 "render inner sitemap $url"
+			sitemap_to_urls "$url" "$sitemap_temp"
+		else
+			echo "$url" >> "$sitemap_temp"
+		fi
+	done
+}
+
+
+if [ $(type -t "$url_function") = "function" ]; then
+	$url_function
+fi
