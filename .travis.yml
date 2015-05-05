@@ -58,6 +58,8 @@ before_script:
 
   - cd travis_ci_drupal_test/drupal
   - git init
+  - git config --global user.email "you@example.com"
+  - git config --global user.name "Your Name"
 
 #script: drush test-run 'Travis-CI Drupal Module Example' --uri=http://127.0.0.1:8080
 script: $HOME/build/popstas/drupal-scripts/run-tests.sh "$HOME/build/popstas/drupal-scripts/travis_ci_drupal_test/drupal"

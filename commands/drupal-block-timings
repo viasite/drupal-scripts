@@ -14,8 +14,6 @@ $br = "\n";
 
 define('DRUPAL_ROOT', $root_path);
 
-echo "root_path: $root_path\n";
-
 $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 @require_once DRUPAL_ROOT . '/includes/bootstrap.inc';
 
