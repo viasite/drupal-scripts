@@ -53,19 +53,14 @@ function check_drupal {
 while getopts ":fnsvy" opt; do
 	case "$opt" in
 		f) SCRIPT_FORCE="1"
-		shift
 		;;
 		n) SCRIPT_ASSUME_NO="1"
-		shift
 		;;
 		s) SCRIPT_SIMULATE="1"
-		shift
 		;;
 		v) SCRIPT_VERBOSE="1"
-		shift
 		;;
 		y) SCRIPT_ASSUME_YES="1"
-		shift
 		;;
 	esac
 done
@@ -81,3 +76,5 @@ if [ "$1" = "--help" ] && [ -n "$SCRIPT_HELP" ]; then
 	usage
 	exit 1
 fi
+
+shift $((OPTIND - 1))
