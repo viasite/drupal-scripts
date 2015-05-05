@@ -1,6 +1,6 @@
 #!/bin/bash
 # 05.04.2015
-# v0.1
+# v0.2
 
 SCRIPT_HELP="
 Drupal script wrapper.
