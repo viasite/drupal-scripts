@@ -49,7 +49,7 @@ function script_help(){
 			text=$($cmd --help | tail -n +3 | head -n1)
 			# "drs help complete" for zsh completion plugin
 			if [ "$complete" = "complete" ]; then
-				printf "%s:%s\n" "$(echo $(basename "$cmd") | sed 's/drupal-//g')" "$text"
+				printf '"%s":"%s" \\\n' "$(echo $(basename "$cmd") | sed 's/drupal-//g')" "$text"
 			else
 				printf "%-25s %s\n" "$(echo $(basename "$cmd") | sed 's/drupal-//g')" "$text"
 			fi
