@@ -39,11 +39,11 @@ fi
 if [ $# -ge 3 ]; then
 	domain="$3"
 else
-	domain="$(get_domain)"
+	domain="${root_path##*/}"
 fi
 uri="http://$domain"
 
 cd "$root_path"
 user=$(whoami)
-env PATH=/usr/local/bin:/usr/bin:/bin USER="$user" COLUMNS=72 drush --root="$root_path" --uri="$uri" $drush_command 2>/dev/null
+env PATH=/usr/local/bin:/usr/bin:/bin USER="$user" COLUMNS=72 drush --root="$root_path" --uri="$uri" $drush_command # 2>/dev/null
 echo env PATH=/usr/local/bin:/usr/bin:/bin USER="$user" COLUMNS=72 drush --root="$root_path" --uri="$uri" $drush_command >&2
