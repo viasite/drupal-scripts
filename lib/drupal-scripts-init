@@ -11,7 +11,7 @@ SCRIPT_VERBOSE=""
 
 if [ -z "$DRUPAL_SCRIPTS_TEST" ]; then
 	[ -r /etc/drupal-scripts.conf ] && . /etc/drupal-scripts.conf
-	[ -r ~/.drupal-scripts.conf ] && . ~/.drupal-scripts.conf
+	[ -r "$HOME/.drupal-scripts.conf" ] && . "$HOME/.drupal-scripts.conf"
 else
 	DRUPAL_SCRIPTS_ROOT="$DRUPAL_SCRIPTS_ROOT_TEST"
 	. "$DRUPAL_SCRIPTS_ROOT"/drupal-scripts.conf.example

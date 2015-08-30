@@ -3,7 +3,7 @@
 DEFAULT_PREFIX="/usr/share"
 BIN_PATH="/usr/local/bin"
 DRUPAL_SCRIPTS_ROOT="$PWD"
-USER_CONFIG_PATH="$HOME/.drupal-scripts.conf"
+CONFIG_PATH="/etc/drupal-scripts.conf"
 SCRIPT_ASSUME_YES=""
 
 function usage(){
@@ -71,16 +71,16 @@ chmod +x "$INSTALL_DIR"/commands/*
 chmod +x "$INSTALL_DIR"/lib/*
 
 [ -w "$BIN_PATH" ] \
-&& ln -s "$INSTALL_DIR"/bin/drs "$BIN_PATH" \
+&& ln -s "$INSTALL_DIR"/bin/drs "$BIN_PATH" 2>/dev/null \
 && echo "Binary installed to $BIN_PATH/drs"
 
-if [ ! -e "$USER_CONFIG_PATH" ]; then
-	cp drupal-scripts.conf.example "$USER_CONFIG_PATH"
+if [ ! -e "$CONFIG_PATH" ]; then
+	cp drupal-scripts.conf.example "$CONFIG_PATH"
 else
-	echo "$USER_CONFIG_PATH exists, don't rewrite it."
+	echo "$CONFIG_PATH exists, don't rewrite it."
 fi
 
 # replace DRUPAL_SCRIPTS_ROOT path in config
-sed -i 's,DRUPAL_SCRIPTS_ROOT=.*,DRUPAL_SCRIPTS_ROOT="'"$INSTALL_DIR"'",g' "$USER_CONFIG_PATH"
+sed -i 's,DRUPAL_SCRIPTS_ROOT=.*,DRUPAL_SCRIPTS_ROOT="'"$INSTALL_DIR"'",g' "$CONFIG_PATH"
 
 echo "Installed drupal-scripts to $INSTALL_DIR."

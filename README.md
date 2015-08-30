@@ -22,8 +22,14 @@ Tested on Debian Squeeze and Ubuntu 14.04.
 
 # Install
 ```
+git clone https://github.com/popstas/drupal-scripts.git
+cd drupal-scripts
 ./install.sh
 ```
+
+It install scripts to `/usr/share/drupal-scripts`.
+Config placed to `/etc/drupal-scripts.conf`
+
 
 # Commands docs
 See [commands docs](docs/commands.md)
@@ -45,6 +51,10 @@ You can pass one test through BATS_TESTS variable:
 ```
 export BATS_TESTS="drupal-sql"
 ./docker-tests.sh
+```
+or
+```
+BATS_TESTS=drupal-sql ./docker-tests.sh
 ```
 
 You can run tests `./run-tests` in any drupal root directory, it not modifies drupal.
