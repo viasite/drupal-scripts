@@ -39,20 +39,24 @@ teardown() {
 }
 
 @test "patch success" {
+	skip "drs patch sould be rewritten."
 	run drs patch "$diff_file"
+	#echo >&2 "$output"
 	[ $status -eq 0 ]
 
 	run diff "$file_to_patch" "$file_patched"
-	echo >&2 "file_to_patch"
-	cat "$file_to_patch" >&2
-	echo >&2 "file_patched"
-	cat "$file_patched" >&2
+	echo >&2 diff "$file_to_patch" "$file_patched"
+	#cat "$file_to_patch" >&2
+	#echo >&2 "file_patched"
+	#cat "$file_patched" >&2
 	echo >&2 "$output"
 	[ $status -eq 0 ]
 }
 
 @test "patch failed" {
+	skip "drs patch sould be rewritten."
 	run drs patch "$diff_file"
+	echo >&2 "$output"
 	[ $status -eq 0 ]
 
 	run drs patch "$diff_file"

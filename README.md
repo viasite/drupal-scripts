@@ -82,3 +82,4 @@ You can run tests `./run-tests` in any drupal root directory, it not modifies dr
 - [ ] drs modules-undoc: more precise check for undoc
 - [ ] bash multi flags
 - [ ] bash strict mode
+- [ ] drs patch rewrite for relative patches

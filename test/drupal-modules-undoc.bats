@@ -12,8 +12,14 @@ setup() {
 @test "list all undocs" {
 	run drs modules-undoc
 	modules_count=$(drs modules-enabled -f | wc -l)
-	undoc_expected=$(( $modules_count - 6 ))
+	undoc_count=$(echo "$output" | wc -l)
+	undoc_expected=$(( $modules_count - 5 ))
 	[ $status -eq 0 ]
+	echo >&2 "Found $undoc_count modules, expected $undoc_expected"
+	echo >&2 "undoc:"
+	echo >&2 "$output"
+	echo >&2 ""
+	echo >&2 "enabled:"
 	drs modules-enabled >&2
-	[ $(echo "$output" | wc -l) = "$undoc_expected" ]
+	[ "$undoc_count" = "$undoc_expected" ]
 }

@@ -14,6 +14,13 @@ Usage:
 
 check_drupal
 
+echo "######################################"
+echo "ALERT! THIS SCRIPT SHOULD BE REWRITED."
+echo "IT USES PATCHES FROM DRUPAL ROOT, "
+echo "SHOULD APPLY PATCH RELATIVE TO MODULE DIRECTORY."
+echo "######################################"
+echo ""
+
 if [ -z "$1" ]; then
 	usage
 	exit 1
@@ -61,6 +68,6 @@ else
 	# change owner of patched files
 	if [ $(whoami) = "root" ]; then
 		user=$(stat -c '%U' $(pwd))
-		find -mmin -1 -exec chown $user:$user {} \;
+		find -mmin -1 -exec chown "$user":"$user" {} \;
 	fi
 fi
