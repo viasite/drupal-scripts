@@ -35,7 +35,10 @@ See [commands docs](docs/commands.md)
 Run tests in docker environment:
 ```
 cd drupal-scripts
-docker run --rm -v $PWD:/usr/local/src/drupal-scripts popstas/squeeze bash ./docker-tests.sh
+docker run --rm \
+ -v $PWD:/usr/local/src/drupal-scripts \
+ -w /usr/local/src/drupal-scripts \
+ popstas/squeeze bash ./docker-tests.sh
 ```
 
 You can run tests `./run-tests` in any drupal root directory, it not modifies drupal.
