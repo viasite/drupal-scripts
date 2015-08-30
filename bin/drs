@@ -1,6 +1,7 @@
 #!/bin/bash
 # 05.04.2015
-# v0.2
+# 31.08.2015
+# v0.2.0
 
 SCRIPT_HELP="
 Drupal script wrapper.
@@ -19,6 +20,7 @@ Usage:
 
 [ -r /etc/drupal-scripts.conf ] && . /etc/drupal-scripts.conf
 [ -r ~/.drupal-scripts.conf ] && . ~/.drupal-scripts.conf
+DRUPAL_SCRIPTS_ROOT=${DRUPAL_SCRIPTS_ROOT:-$PWD}
 . "$DRUPAL_SCRIPTS_ROOT/lib/drupal-scripts-init"
 
 if [ $# = 0 ]; then

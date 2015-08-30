@@ -1,4 +1,4 @@
-drs v0.2
+drs v0.2.0
 
 Drupal script wrapper.
 

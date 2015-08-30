@@ -33,6 +33,10 @@ Config placed to `/etc/drupal-scripts.conf`
 
 # Commands docs
 See [commands docs](docs/commands.md)
+Rebuild docs:
+```
+./make_markdown_docs
+```
 
 # Testing
 <a href="http://ci.viasite.ru/viewType.html?buildTypeId=DrupalScripts_Build">
