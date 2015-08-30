@@ -65,25 +65,17 @@ You can run tests `./run-tests` in any drupal root directory, it not modifies dr
 
 # TODO
 
-## v0.2
-- [x] moved commands to subdir
-- [x] drs wrapper for all commands
-- [x] installer: rewrite drupal scripts root in conf.example
-- [x] correct exit codes
-- [x] move all errors to stderr
-- [x] zsh autocomplete
-- [x] CI
-- [ ] drupal-module-install tests
-- [ ] drupal-urls tests
-
 ## v0.3
 - [ ] move todo to github issues
 - [ ] global version
 - [ ] setup once in tests
 - [ ] installer: tests
+- [ ] drupal-module-install tests
+- [ ] drupal-urls tests
 - [ ] drs module-enabled: check directory exists
 - [ ] drs module-enabled: multicheck
 - [ ] drs modules-undoc: more precise check for undoc
 - [ ] bash multi flags
 - [ ] bash strict mode
 - [ ] drs patch rewrite for relative patches
+- [ ] zsh completion installer
