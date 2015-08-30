@@ -7,7 +7,6 @@
 
 @test "run cron with root_path" {
 	run drs cron-run -s "$TEST_ROOT_PATH"
-	echo >&2 "$output"
 	[ $status -eq 0 ]
 }
 
