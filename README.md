@@ -41,30 +41,29 @@ docker run --rm \
  popstas/squeeze bash ./docker-tests.sh
 ```
 
+You can pass one test through BATS_TESTS variable:
+```
+export BATS_TESTS="drupal-sql"
+./docker-tests.sh
+```
+
 You can run tests `./run-tests` in any drupal root directory, it not modifies drupal.
 
-
 # TODO
-## v0.1
-- [x] move shared code to drupal-scripts-init
-- [x] replace $(basename $PWD) to get_domain
-- [x] write tests
-- [x] write docs and move to /docs
-- [x] spaces to tabs
-- [x] drs sql: add host and port to connect string
 
 ## v0.2
-- [x] move commands to subdir
-- [x] drs wrapper
+- [x] moved commands to subdir
+- [x] drs wrapper for all commands
 - [x] installer: rewrite drupal scripts root in conf.example
 - [x] correct exit codes
 - [x] move all errors to stderr
 - [x] zsh autocomplete
-- [ ] Travis CI
+- [x] CI
 - [ ] drupal-module-install tests
 - [ ] drupal-urls tests
 
 ## v0.3
+- [ ] move todo to github issues
 - [ ] global version
 - [ ] setup once in tests
 - [ ] installer: tests
@@ -72,3 +71,4 @@ You can run tests `./run-tests` in any drupal root directory, it not modifies dr
 - [ ] drs module-enabled: multicheck
 - [ ] drs modules-undoc: more precise check for undoc
 - [ ] bash multi flags
+- [ ] bash strict mode

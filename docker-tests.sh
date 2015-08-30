@@ -14,9 +14,12 @@ pushd /usr/local/src/drupal-scripts
 popd
 
 # install drupal
-if [ ! -d drupal ]; then
+if [ ! -d build/drupal ]; then
+	mkdir build
 	mysql -e 'create database drupal;'
-	drush -y core-quick-drupal --profile=testing --no-server --db-url=mysql://root:mysql_pass@localhost/drupal drupal
+	echo "Install drupal..."
+	drush -yq core-quick-drupal --profile=testing --no-server --db-url=mysql://root:mysql_pass@localhost/drupal build
 fi
 
-./run-tests.sh /usr/local/src/drupal-scripts/drupal/drupal
+BATS_TESTS="${BATS_TESTS:-""}"
+./run-tests.sh /usr/local/src/drupal-scripts/build/drupal "$BATS_TESTS"
