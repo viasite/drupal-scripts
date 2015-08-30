@@ -6,13 +6,6 @@ set -e
 service bind9 start > /dev/null
 service mysql start > /dev/null
 
-# install server-scripts
-if [ ! -d /usr/local/src/server-scripts ]; then
-	git clone https://github.com/popstas/server-scripts.git /usr/local/src/server-scripts
-fi
-cd /usr/local/src/server-scripts
-./install.sh -y > /dev/null
-
 # install drupal-scripts
 # -v $PWD:/user/local/src/drupal-scripts
 #git clone https://github.com/popstas/drupal-scripts.git /usr/local/src/drupal-scripts
