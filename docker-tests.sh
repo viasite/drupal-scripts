@@ -3,6 +3,9 @@
 
 set -e
 
+DB=drupal_scripts_test
+DB_PASS=mysql_pass
+
 service bind9 start > /dev/null
 service mysql start > /dev/null
 
@@ -14,11 +17,16 @@ pushd /usr/local/src/drupal-scripts
 popd
 
 # install drupal
-if [ ! -d build/drupal ]; then
-	mkdir build
-	mysql -e 'create database drupal;'
+isdb=$(mysql -Brs --execute="SHOW DATABASES LIKE '$DB'" | wc -l)
+if [ "$isdb" = 0 ]; then
+	mysql -e 'create database $DB;'
+fi
+
+if [ ! -d build/drupal ] || [ "$isdb" = 0 ]; then
+	mkdir -p build
+	rm -rf build/drupal
 	echo "Install drupal..."
-	drush -yq core-quick-drupal --profile=testing --no-server --db-url=mysql://root:mysql_pass@localhost/drupal build
+	drush -yq core-quick-drupal --profile=testing --no-server --db-url=mysql://root:$DB_PASS@localhost/$DB build
 fi
 
 BATS_TESTS="${BATS_TESTS:-""}"

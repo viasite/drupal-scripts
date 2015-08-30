@@ -13,7 +13,9 @@ setup() {
 	run drs modules-undoc
 	modules_count=$(drs modules-enabled -f | wc -l)
 	undoc_count=$(echo "$output" | wc -l)
-	undoc_expected=$(( $modules_count - 5 ))
+	undoc_expected=$(( $modules_count - 6 ))
+	# TODO: on clean installation need -6, on second tests run -5
+	#undoc_expected=$(( $modules_count - 5 ))
 	[ $status -eq 0 ]
 	echo >&2 "Found $undoc_count modules, expected $undoc_expected"
 	echo >&2 "undoc:"
