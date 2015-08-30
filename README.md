@@ -14,7 +14,8 @@ Some commands has same functions as drush commands but not initializes drupal bo
 
 Tested on Debian Squeeze and Ubuntu 14.04.
 
-[![Build Status](https://travis-ci.org/popstas/drupal-scripts.svg?branch=0.2)](https://travis-ci.org/popstas/drupal-scripts)
+<a href="http://ci.viasite.ru/viewType.html?buildTypeId=DrupalScripts_Build">
+<img src="http://ci.viasite.ru/app/rest/builds/buildType:(id:DrupalScripts_Build)/statusIcon"/></a>
 
 # Requirements
 - Drush 6.x
@@ -39,8 +40,6 @@ Rebuild docs:
 ```
 
 # Testing
-<a href="http://ci.viasite.ru/viewType.html?buildTypeId=DrupalScripts_Build">
-<img src="http://ci.viasite.ru/app/rest/builds/buildType:(id:DrupalScripts_Build)/statusIcon"/></a>
 
 Run tests in docker environment:
 ```
