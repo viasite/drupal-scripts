@@ -41,9 +41,11 @@ teardown() {
 	random_comment=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 	drush dis -y -q yandex_metrics
 	run drs module-enable-add-git yandex_metrics "$random_comment"
+	echo >&2 "$output"
 	[ $status -eq 0 ]
 
 	run sh -c "git log -n1 --oneline | head -n1"
+	echo >&2 "$output"
 	[ $(echo "$output" | grep -c "modules: yandex_metrics, $random_comment") -eq 1 ]
 }
 
@@ -58,12 +60,15 @@ teardown() {
 @test "try to commit commited module" {
 	drush dis -y -q yandex_metrics
 	run drs module-enable-add-git yandex_metrics
+	echo >&2 "$output"
 	[ $status -eq 0 ]
 
 	drush dis -y -q yandex_metrics
 	run drs module-enable-add-git yandex_metrics
+	echo >&2 "$output"
 	[ $status -ne 0 ]
 
 	run sh -c "git log -n1 --oneline | head -n1"
+	echo >&2 "$output"
 	[ $(echo "$output" | grep -c "modules: yandex_metrics") -ne 0 ]
 }

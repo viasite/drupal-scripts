@@ -3,16 +3,21 @@ language: php
 php:
   - 5.3
 
+services:
+  - mysql
+
 matrix:
   fast_finish: true
 
 mysql:
   database: travis_ci_drupal_test
   username: root
+  password: ''
   encoding: utf8
 
 before_install:
   - sudo apt-get update > /dev/null
+  #- echo "USE mysql;\nUPDATE user SET password=PASSWORD('') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
 
 install:
   # install php packages required for running a web server from drush on php 5.3
@@ -43,7 +48,7 @@ before_script:
   - pwd
 
   # create new site, stubbing sendmail path with true to prevent delivery errors and manually resolving drush path
-  - mysql -e 'create database travis_ci_drupal_test'
+  - mysql -e 'create database travis_ci_drupal_test' -u root -p 'root'
   #- drush --yes core-quick-drupal --profile=testing --no-server --db-url=mysql://root:@127.0.0.1/travis_ci_drupal_test --enable=simpletest travis_ci_drupal_test
   - php -d sendmail_path=`which true` ~/.composer/vendor/bin/drush.php --yes core-quick-drupal --profile=testing --no-server --db-url=mysql://root:@127.0.0.1/travis_ci_drupal_test travis_ci_drupal_test
 

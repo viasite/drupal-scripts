@@ -1,6 +1,17 @@
 #!/usr/bin/env bash
 
 export DRUPAL_SCRIPTS_TEST=1
+export DRUPAL_SCRIPTS_ROOT_TEST=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+command -v bats >/dev/null 2>&1 || {
+	read -p "bats required but it's not installed, install bats? (y/n)? " -n 1 -r
+	echo ""
+	if [[ $REPLY =~ ^[Yy]$ ]]; then
+		git clone https://github.com/sstephenson/bats.git /usr/local/src/bats
+		cd /usr/local/src/bats
+		./install.sh /usr/local
+	fi
+}
 
 command -v bats >/dev/null 2>&1 || {
 	echo >&2 "bats required but it's not installed, aborting."
@@ -8,7 +19,6 @@ command -v bats >/dev/null 2>&1 || {
 	exit 1
 }
 
-export DRUPAL_SCRIPTS_ROOT_TEST=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 cd "$DRUPAL_SCRIPTS_ROOT_TEST"
 
 . lib/drupal-scripts-init

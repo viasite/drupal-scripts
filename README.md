@@ -21,10 +21,27 @@ Tested on Debian Squeeze and Ubuntu 14.04.
 - Drupal 7.x
 
 # Install
+```
 ./install.sh
+```
 
 # Commands docs
 See [commands docs](docs/commands.md)
+
+# Testing
+## Тестирование
+<a href="http://ci.viasite.ru/viewType.html?buildTypeId=DrupalScripts_Build">
+<img src="http://ci.viasite.ru/app/rest/builds/buildType:(id:DrupalScripts_Build)/statusIcon"/></a>
+
+Run tests in docker environment:
+```
+cd site-setup
+docker run --rm -v $PWD:/usr/local/src/site-setup popstas/squeeze bash ./docker-tests.sh
+```
+
+Без docker можно запускать run-tests.sh, тогда действия должны выполняться под root и могут испортить вам рабочую систему.
+`docker-tests.sh` можно запускать и вне docker, он устанавливает server-scripts и site-setup, предполагает, что исходники лежат в /usr/local/src/site-setup
+
 
 # TODO
 ## v0.1
