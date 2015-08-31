@@ -44,7 +44,7 @@ fi
 uri="http://$domain"
 
 QUIET="--quiet"
-if [ -n "$DRUPAL_SCRIPTS_TEST=" ]; then
+if [ -n "$DRUPAL_SCRIPTS_TEST" ]; then
 	QUIET=""
 fi
 
