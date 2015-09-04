@@ -1,0 +1,17 @@
+SCRIPT_HELP="
+First line - short description of command
+Next lines of help in any format
+
+Usage:
+       {0} - it will be replaced to command name
+
+Options:
+       -y Assume yes on delete directory confirmation
+       -n Assume no on delete directory confirmation"
+
+. $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
+
+check_drush # if need for drush
+check_drupal # if need for drupal
+
+# Next code in any format

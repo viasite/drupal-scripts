@@ -60,7 +60,7 @@ or
 BATS_TESTS=drupal-sql ./docker-tests.sh
 ```
 
-You can run tests `./run-tests` in any drupal root directory, it not modifies drupal.
+You can run tests `./run-tests /path/to/drupal/root` in any drupal root directory, it not modifies drupal.
 
 # TODO
 
