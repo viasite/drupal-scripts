@@ -60,11 +60,13 @@ if [ -d "$INSTALL_DIR" ]; then
 		fi
 	fi
 
-	rm -rf "$INSTALL_DIR"
 	[ -w "$BIN_PATH"/drs ] && [ -h "$BIN_PATH"/drs ] && rm "$BIN_PATH"/drs
 fi
 
-cp -R "$DRUPAL_SCRIPTS_ROOT" "$INSTALL_DIR"
+rsync -a "$DRUPAL_SCRIPTS_ROOT/" "$INSTALL_DIR" || {
+	echo "Sync files to $INSTALL_DIR failed."
+	exit 1
+}
 
 chmod +x "$INSTALL_DIR"/bin/*
 chmod +x "$INSTALL_DIR"/commands/*
