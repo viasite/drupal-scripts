@@ -22,8 +22,6 @@ Usage:
 
 . $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
 
-check_drush
-
 if [ $# -lt 1 ]; then
 	usage
 	exit 1
