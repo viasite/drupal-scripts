@@ -4,7 +4,7 @@
 set -e
 
 DB=drupal_scripts_test
-DB_PASS=mysql_pass
+DB_PASS=teamcity
 
 service bind9 start > /dev/null
 service mysql start > /dev/null
