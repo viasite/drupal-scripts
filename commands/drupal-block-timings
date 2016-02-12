@@ -15,6 +15,7 @@ $br = "\n";
 define('DRUPAL_ROOT', $root_path);
 
 $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+$_SERVER['REQUEST_METHOD'] = 'GET';
 @require_once DRUPAL_ROOT . '/includes/bootstrap.inc';
 
 $time_set = microtime(TRUE);
