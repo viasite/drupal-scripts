@@ -43,7 +43,7 @@ if [ -n "$(grep "$cron_command" "$temp_file")" ]; then
 fi
 
 mins=$(shuf -i 1-59 -n 1)
-cron_line="$mins */3 * * * $cron_command"
+cron_line="$mins 0,6-21/3 * * * $cron_command"
 echo "$cron_line" >> "$temp_file"
 
 if [ -n "$SCRIPT_SIMULATE" ]; then
