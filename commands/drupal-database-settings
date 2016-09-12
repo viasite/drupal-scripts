@@ -20,7 +20,14 @@ if (isset($argv[1]) && $argv[1] == '--help') {
   exit(1);
 }
 
-@include('sites/default/settings.php');
+$settings_path = 'sites/default/settings.php';
+if(!file_exists($settings_path)){
+	fwrite(STDERR, "$settings_path not found\n");
+	//echo "$settings_path not found\n";
+	exit(1);
+}
+
+include($settings_path);
 $command = $argv[1];
 if (!in_array($command, $commands)) {
   script_usage($commands);
