@@ -22,7 +22,9 @@ Usage:
        {0} all [path/to/file]
         - add all users from file or from USERS_LIST_FILE in config,
           file in format:
-          email [role] [password]"
+          email [role] [password]
+          allowed comment lines begins from #
+"
 
 . $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
 
@@ -77,6 +79,9 @@ function add_from_file(){
 	fi
 
 	while read line; do
+		if [ "$(echo "$line" | grep -c "^#")" = 1 ]; then
+			continue
+		fi
 		eval "line=($line)"
 		login="${line[0]}"
 		role="${line[1]}"
