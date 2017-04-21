@@ -32,6 +32,14 @@ It install scripts to `/usr/share/drupal-scripts`.
 Config placed to `/etc/drupal-scripts.conf`
 
 
+## Autocomplete commands
+You can add [drupal-scripts.plugin.zsh](drupal-scripts.plugin.zsh) to oh-my-zsh custom plugins or install it with antigen:
+```
+antigen bundle viasite/drupal-scripts
+```
+
+Plugin included in [viasite-ansible.zsh](https://github.com/viasite-ansible/ansible-role-zsh) role.
+
 # Commands docs
 See [commands docs](docs/commands.md)
 Rebuild docs:
@@ -77,4 +85,3 @@ You can run tests `./run-tests /path/to/drupal/root` in any drupal root director
 - [ ] bash multi flags
 - [ ] bash strict mode
 - [ ] drs patch rewrite for relative patches
-- [ ] zsh completion installer
