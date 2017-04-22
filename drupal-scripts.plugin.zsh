@@ -27,29 +27,9 @@ _drs_variables() {
 
 _drs() {
     local -a _1st_arguments
-    _1st_arguments=(
-        "add-users":"Add users to Drupal in current directory via Drush." \
-        "block-timings":"Shows block load time for each block in Drupal." \
-        "bootstrap-timings":"Shows Drupal bootstrap load timings." \
-        "clear-cache-table":"Cleans cache_ table and optimize it." \
-        "cron-add":"Add drupal-cron-run to user system cron." \
-        "cron-run":"Run Drush cron in correct environment." \
-        "database-settings":"Shows database credentials from settings.php." \
-        "decode":"Decode serialized values from Drupal database." \
-        "module-doc":"Show module brief module info from custom file with internal documentation." \
-        "module-enable-add-git":"Install module, commit module to git." \
-        "module-enabled":"Check module status." \
-        "module-install":"Copy module from directory." \
-        "modules-enabled":"List enabled modules." \
-        "modules-undoc":"List modules without internal documentation." \
-        "module-uninstall":"Disable and uninstall module via Drush, then remove module directory with confirmation." \
-        "module-version":"Show module version." \
-        "patch":"Apply patch." \
-        "sql":"Execute sql query." \
-        "table-count":"Show count rows from table." \
-        "urls":"Get urls of site." \
-        "vget":"Show Drupal variable."
-    )
+    IFS=$'
+'
+    _1st_arguments=($(drs help | perl -pe 's|(.*?)\s+(.*)|\1:$2 \\|'))
 
     _arguments \
         '*:: :->commands' && return 0
