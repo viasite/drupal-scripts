@@ -1,5 +1,10 @@
 #compdef drs
 
+_drs_add_users() {
+    source /etc/drupal-scripts.conf
+    values="$(cat "$USERS_LIST_FILE" | grep -v "^#" | awk '{ print $1 }')"
+}
+
 _drs_tables() {
     values=$(drs sql "SHOW TABLES") 2>/dev/null
 }
@@ -55,6 +60,11 @@ _drs() {
     fi
 
     case "$words[1]" in
+        add-users)
+        _drs_add_users
+        compadd "$@" $(echo $values)
+        ;;
+
         clear-cache-table)
         _drs_cache_tables
         compadd "$@" $(echo $values)
