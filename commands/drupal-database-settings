@@ -39,5 +39,4 @@ if (!in_array($command, $commands)) {
   exit(1);
 }
 
-print_r($databases);
 echo $databases['default']['default'][$command] . "\n";
