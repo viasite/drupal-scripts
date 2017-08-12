@@ -22,16 +22,22 @@ if (isset($argv[1]) && $argv[1] == '--help') {
 
 $settings_path = 'sites/default/settings.php';
 if(!file_exists($settings_path)){
-	fwrite(STDERR, "$settings_path not found\n");
-	//echo "$settings_path not found\n";
-	exit(1);
+  fwrite(STDERR, "$settings_path not found\n");
+  //echo "$settings_path not found\n";
+  exit(1);
+}
+include($settings_path);
+
+$settings_path = 'sites/default/settings.local.php';
+if(file_exists($settings_path)){
+  include($settings_path);
 }
 
-include($settings_path);
 $command = $argv[1];
 if (!in_array($command, $commands)) {
   script_usage($commands);
   exit(1);
 }
 
+print_r($databases);
 echo $databases['default']['default'][$command] . "\n";
