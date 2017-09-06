@@ -139,7 +139,7 @@ Options:
 Copy module from directory.  
   
 Usage:  
-       drs module-install /path/to/module_dir  
+       drs module-install /path/to/module_dir [module_name]  
   
 Options:  
        -f Remove exists module  

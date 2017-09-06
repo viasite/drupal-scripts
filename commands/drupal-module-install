@@ -6,7 +6,7 @@ SCRIPT_HELP="
 Copy module from directory.
 
 Usage:
-       {0} /path/to/module_dir
+       {0} /path/to/module_dir [module_name]
 
 Options:
        -f Remove exists module
@@ -20,20 +20,51 @@ if [ $# = 0 ]; then
 	exit 1
 fi
 
+set -x
+
 check_drupal
 check_drush
 
 src_path="${1%/}"
+module_name=${2:-""}
 
-if [ ! -d "$src_path" ] || [ ! -r "$src_path" ]; then
-	echo >&2 "Source $src_path not exists or not readable"
-	exit 1
+is_local_dir=""
+
+# local directory
+if [ -d "$src_path" ]; then
+	if [ ! -r "$src_path" ]; then
+		echo >&2 "Source $src_path not exists or not readable"
+		exit 1
+	fi
+	is_local_dir=1
+	module_name="$(basename "$src_path")"
 fi
 
-module_name="$(basename "$src_path")"
+src_url=""
+
+# local tgz or tgz url
+if [ "$(echo "$src_path" | grep -cE "(\.tgz|.tar\.gz)")" = 1 ]; then
+	# remote file
+	if [ "$(echo "$src_path" | grep -cE "https?://")" = 1 ]; then
+		src_url="$src_path"
+	# local file
+	else
+		if [ ! -e "$src_path" ]; then
+			echo >&2 "Module archive not exists"
+			exit 1
+		fi
+		src_url="file://$src_path"
+	fi
+
+	if [ -z "$module_name" ]; then
+		echo >&2 "module_name (arg 2) required for tar.gz module install"
+		exit 1
+	fi
+fi
 
 dest_path="sites/all/modules/$module_name"
 
+# module owerwrite
 if [ -d "$dest_path" ]; then
 	if [ -n "$SCRIPT_FORCE" ]; then
 		if [ -n "$SCRIPT_ASSUME_YES" ]; then
@@ -55,8 +86,26 @@ if [ -d "$dest_path" ]; then
 	fi
 fi
 
-[ -n "$SCRIPT_VERBOSE" ] && echo cp -r "$src_path" "$dest_path"
-cp -r "$src_path" "$dest_path"
+# copy local directory
+if [ -n "$is_local_dir" ]; then
+	[ -n "$SCRIPT_VERBOSE" ] && echo cp -r "$src_path" "$dest_path"
+	cp -r "$src_path" "$dest_path"
+fi
+
+# download with drush make
+if [ -n "$src_url" ]; then
+	makefile=$(mktemp)
+	echo "Created temp file $makefile"
+	cat > $makefile << EOL
+core = 7.x
+api = 2
+projects[$module_name][type] = "module"
+projects[$module_name][download][type] = "file"
+projects[$module_name][download][url] = "$src_url"
+EOL
+
+	drush make --no-core -y --verbose $makefile
+fi
 
 user=$(stat -c '%U' "$PWD")
 chown -R $user:$user "$dest_path"
