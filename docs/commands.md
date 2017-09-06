@@ -32,6 +32,8 @@ Usage:
         - add all users from file or from USERS_LIST_FILE in config,  
           file in format:  
           email [role] [password]  
+          allowed comment lines begins from #  
+  
 
 
 ## drs block-timings
@@ -180,6 +182,13 @@ Apply patch.
   
 Usage:  
        drs patch (path_file|path_url)  
+
+
+## drs patch-add
+Add patch to /patches/ directory.  
+  
+Usage:  
+       drs patch-add (path_file|path_url)  
 
 
 ## drs sql

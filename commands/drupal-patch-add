@@ -1,0 +1,50 @@
+#!/bin/bash
+
+SCRIPT_HELP="
+Add patch to /patches/ directory.
+
+Usage:
+       {0} (path_file|path_url)"
+
+. $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
+
+check_drupal
+
+set -eu
+
+drupal_patches_init() {
+	if [ ! -d "patches" ]; then
+		mkdir "patches"
+	fi
+
+	if [ ! -e "patches/patches.make" ]; then
+		echo "api = 2
+core = 7.x
+" > "patches/patches.make"
+	fi
+}
+
+# copies patch from /usr/local/drupal/patches to site /patches and add it to patches.make
+# use project_name 'drupal' for core patches
+drupal_patches_add() {
+	project_name="$1"
+	patch_src="$2"
+	patch_name="$(basename $patch_src)"
+	drupal_patches_init
+
+	# https://www.drupal.org/files/issues/search_api_ranges-widget_links_with_url_query-2288643-4.patch
+	if [ "$(echo "$patch_src" | grep -cE "https?://")" = 1 ]; then
+		wget -O "patches/$patch_name" "$patch_src"
+	elif [ -e "$patch_src" ]; then
+		cp "$patch_src" "patches/$patch_name"
+	fi
+
+	patch_line="projects[$project_name][patch][] = \"$patch_name\""
+	if [ "$(grep -cF "$patch_line" "patches/patches.make")" != 0 ]; then
+		echo "Patch already added."
+	else
+		echo "projects[$project_name][patch][] = \"$patch_name\"" >> "patches/patches.make"
+	fi
+}
+
+drupal_patches_add "$@"

@@ -44,7 +44,8 @@ _drs() {
         "modules-undoc":"List modules without internal documentation." \
         "module-uninstall":"Disable and uninstall module via Drush, then remove module directory with confirmation." \
         "module-version":"Show module version." \
-        "patch":"Apply patch." \
+        "patch":"Apply patch (deprecated)." \
+        "patch-add":"Add patch to /patches/ directory for drush-patchmanager." \
         "sql":"Execute sql query." \
         "table-count":"Show count rows from table." \
         "urls":"Get urls of site." \
