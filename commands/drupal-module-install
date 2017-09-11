@@ -6,11 +6,20 @@ SCRIPT_HELP="
 Copy module from directory.
 
 Usage:
-       {0} /path/to/module_dir [module_name]
+       {0} module_src [module_name] [module_type] [module_subdir]
+       module_src: [local_path|url_to_gz]
+       module_type: [module|theme|library]
 
 Options:
        -f Remove exists module
        -y Assume yes
+
+Examples:
+       {0} /path/to/mymodule
+       {0} http://update.mycompany.ru/modules/mymodule.tar.gz mymodule
+       {0} http://update.mycompany.ru/libraries/mylibrary.tar.gz mylibrary library
+       {0} http://update.mycompany.ru/themes/mytheme.tar.gz mytheme theme
+       {0} http://update.mycompany.ru/features/myfeature.tar.gz myfeature module my_modules
 "
 
 . $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
@@ -27,6 +36,16 @@ check_drush
 
 src_path="${1%/}"
 module_name=${2:-""}
+module_type=${3:-"module"}
+module_subdir=${4:-""}
+
+# # copy to subdir
+# if [ -n "$module_subdir" ]; then
+# 	if [ ! -d "$module_subdir" ]; then
+# 		echo "$module_subdir not exists, creating"
+# 		mkdir -p "$module_subdir"
+# 	fi
+# fi
 
 is_local_dir=""
 
@@ -62,7 +81,15 @@ if [ "$(echo "$src_path" | grep -cE "(\.tgz|.tar\.gz)")" = 1 ]; then
 	fi
 fi
 
-dest_path="sites/all/modules/$module_name"
+declare -A module_paths
+module_paths["module"]="modules"
+module_paths["theme"]="themes"
+module_paths["library"]="libraries"
+
+dest_path="sites/all/${module_paths["$module_type"]}/$module_name"
+if [ -n "$module_subdir" ]; then
+	dest_path="sites/all/${module_paths["$module_type"]}/$module_subdir/$module_name"
+fi
 
 # module owerwrite
 if [ -d "$dest_path" ]; then
@@ -81,8 +108,8 @@ if [ -d "$dest_path" ]; then
 			rm -r "$dest_path"
 		fi
 	else
-		echo >&2 "Module $module_name exists, aborting."
-		exit 1
+		echo >&2 "Module $dest_path exists, aborting."
+		exit 0
 	fi
 fi
 
@@ -99,7 +126,8 @@ if [ -n "$src_url" ]; then
 	cat > $makefile << EOL
 core = 7.x
 api = 2
-projects[$module_name][type] = "module"
+projects[$module_name][type] = "$module_type"
+projects[$module_name][subdir] = "$module_subdir"
 projects[$module_name][download][type] = "file"
 projects[$module_name][download][url] = "$src_url"
 EOL
