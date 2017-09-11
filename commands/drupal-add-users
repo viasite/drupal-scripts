@@ -32,7 +32,6 @@ if [ $# = 0 ]; then
 	usage
 	exit 1
 fi
-
 check_drush
 check_drupal
 
@@ -49,7 +48,7 @@ function add_user {
 	fi
 
 	if [ -z "$password" ]; then
-		password=$(</dev/urandom tr -dc 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789_' | head -c10; echo "")
+		password=$(echo $(free)$(date +%s%N) | md5sum | head -c10; echo "")
 	fi
 
 	drush uinf "$login" > /dev/null 2>&1
