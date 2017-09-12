@@ -29,8 +29,6 @@ if [ $# = 0 ]; then
 	exit 1
 fi
 
-set -x
-
 check_drupal
 check_drush
 
