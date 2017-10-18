@@ -30,7 +30,7 @@ fi
 count=$(drs sql "SELECT COUNT(*) FROM {${cache_table}} WHERE expire <> 0 AND expire < UNIX_TIMESTAMP()")
 
 if [ "$count" -ne 0 ]; then
-	drs sql "DELETE FROM {${cache_table}} WHERE expire <> 0 AND expire < UNIX_TIMESTAMP() LIMIT 3000"
+	drs sql "DELETE FROM {${cache_table}} WHERE expire <> 0 AND expire < UNIX_TIMESTAMP() LIMIT 5000"
 	drs sql "OPTIMIZE TABLE {${cache_table}}" > /dev/null
 fi
 
