@@ -20,13 +20,6 @@ Options:
 check_drush
 check_drupal
 
-DRS_BINARY="$(which drs)"
-
-if [ ! -r "$DRS_BINARY" ]; then
-	echo >&2 "Script '$DRS_BINARY' not found, aborting."
-	exit 1
-fi
-
 root_path="$PWD"
 user=$(stat -c '%U' "$root_path")
 
@@ -35,7 +28,7 @@ trap 'rm -f "$temp_file"' EXIT
 
 crontab -l -u "$user" > "$temp_file" 2>/dev/null
 
-cron_command="$DRS_BINARY cron-run \"$root_path\""
+cron_command="drs cron-run \"$root_path\""
 
 if [ -n "$(grep "$cron_command" "$temp_file")" ]; then
 	echo >&2 "drush was in cron, exit"

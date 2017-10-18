@@ -21,6 +21,11 @@ else
 fi
 DRUPAL_SCRIPTS_BINARY="$DRUPAL_SCRIPTS_ROOT/bin/drs"
 
+DRS_BINARY="$(which drs)"
+if [ ! -r "$DRS_BINARY" ]; then
+	export PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+fi
+
 function usage {
 	version="$(grep '# \?v[0-9.]\+' -o $0 | tr -d '# ')"
 	script_name="$(basename $0 | sed 's/drupal-/drs /g')"
