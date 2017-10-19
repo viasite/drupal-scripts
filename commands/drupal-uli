@@ -1,0 +1,25 @@
+#!/bin/bash
+
+SCRIPT_HELP="
+drush uli wrapper
+Usage:
+
+       {0} 
+        - login as user #1
+
+       {0} uid
+        - login as user [uid]
+"
+
+. $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
+
+check_drush
+check_drupal
+
+#!/bin/bash
+
+user=${1:-"1"}
+
+
+drush uli "$user" --uri="http://$(get_domain | basename "$PWD")"
+

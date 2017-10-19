@@ -139,11 +139,20 @@ Options:
 Copy module from directory.  
   
 Usage:  
-       drs module-install /path/to/module_dir [module_name]  
+       drs module-install module_src [module_name] [module_type] [module_subdir]  
+       module_src: [local_path|url_to_gz]  
+       module_type: [module|theme|library]  
   
 Options:  
        -f Remove exists module  
        -y Assume yes  
+  
+Examples:  
+       drs module-install /path/to/mymodule  
+       drs module-install http://update.mycompany.ru/modules/mymodule.tar.gz mymodule  
+       drs module-install http://update.mycompany.ru/libraries/mylibrary.tar.gz mylibrary library  
+       drs module-install http://update.mycompany.ru/themes/mytheme.tar.gz mytheme theme  
+       drs module-install http://update.mycompany.ru/features/myfeature.tar.gz myfeature module my_modules  
   
 
 
