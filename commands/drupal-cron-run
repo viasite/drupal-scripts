@@ -48,5 +48,5 @@ fi
 
 cd "$root_path"
 user=$(whoami)
-env PATH=/usr/local/bin:/usr/bin:/bin USER="$user" COLUMNS=72 drush --root="$root_path" --uri="$uri" $QUIET "$drush_command" # 2>/dev/null
+env PATH=/usr/local/bin:/usr/bin:/bin USER="$user" COLUMNS=72 drush --root="$root_path" --uri="$uri" $QUIET $drush_command # 2>/dev/null
 #echo env PATH=/usr/local/bin:/usr/bin:/bin USER="$user" COLUMNS=72 drush --root="$root_path" --uri="$uri" $drush_command >&2
