@@ -12,13 +12,15 @@ Usage:
        {0} root_path
         - run drush cron in root_path
 
-       {0} root_path elysia-cron
+       {0} root_path 'elysia-cron run'
         - run drush elysia-cron in root_path
 
        {0} root_path cron domain
         - run drush cron in root_path using domain.
           Need for override http://default, for simplenews.
-          Default domain - basename of root_path"
+          Default domain - basename of root_path
+          Example:
+          {0} /path/to/site cron example.com"
 
 . $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
 
