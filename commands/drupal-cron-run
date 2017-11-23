@@ -20,7 +20,7 @@ Usage:
           Need for override http://default, for simplenews.
           Default domain - basename of root_path
           Example:
-          {0} /path/to/site cron example.com"
+          {0} /path/to/site cron example.com
           {0} /path/to/site cron https://example.com"
 
 . $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
