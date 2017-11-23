@@ -21,6 +21,7 @@ Usage:
           Default domain - basename of root_path
           Example:
           {0} /path/to/site cron example.com"
+          {0} /path/to/site cron https://example.com"
 
 . $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
 
@@ -41,7 +42,12 @@ if [ $# -ge 3 ]; then
 else
 	domain="${root_path##*/}"
 fi
-uri="http://$domain"
+
+if [ "$(echo "$domain" | grep -c "http://")" = 0 ] && [ "$(echo "$domain" | grep -c "https://")" = 0 ]; then
+	uri="http://$domain"
+else
+	uri="$domain"
+fi
 
 QUIET="--quiet"
 if [ -n "$DRUPAL_SCRIPTS_TEST" ]; then
