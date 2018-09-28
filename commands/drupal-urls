@@ -54,16 +54,22 @@ urls_sitemap() {
 sitemap_to_urls() {
 	sitemap_url="$1"
 	sitemap_temp="$2"
-
-	for xml_row in $(curl -s "$sitemap_url" | grep "<loc>"); do
-		url=$(echo "$xml_row" | grep -o "http:.*" | cut -d'<' -f1)
-		if [ $(echo "$xml_row" | grep -c "<sitemap>") != 0 ]; then
-			[ -n "$SCRIPT_VERBOSE" ] && echo >&2 "render inner sitemap $url"
-			sitemap_to_urls "$url" "$sitemap_temp"
-		else
-			echo "$url" >> "$sitemap_temp"
-		fi
-	done
+	is_inner="${3:-""}"
+	
+	if [ -n "$is_inner" ]; then
+		# for fast scan of many urls
+		curl -s "$sitemap_url" | grep "<loc>" | grep -oE "https?://.*" | cut -d'<' -f1 >> "$sitemap_temp"
+	else
+		for xml_row in $(curl -s "$sitemap_url" | grep "<loc>"); do
+			url=$(echo "$xml_row" | grep -o "http:.*" | cut -d'<' -f1)
+			if [ $(echo "$xml_row" | grep -c "<sitemap>") != 0 ]; then
+				[ -n "$SCRIPT_VERBOSE" ] && echo >&2 "render inner sitemap $url"
+				sitemap_to_urls "$url" "$sitemap_temp" "inner"
+			else
+				echo "$url" >> "$sitemap_temp"
+			fi
+		done
+	fi
 }
 
 
