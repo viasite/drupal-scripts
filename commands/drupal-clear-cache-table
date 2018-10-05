@@ -22,7 +22,7 @@ if [ $# != 1 ]; then
 fi
 
 cache_table="$1"
-if [ -z $(echo "$cache_table" | grep "^cache_") ]; then
+if [ -z $(echo "$cache_table" | grep "^cache") ]; then
 	echo >&2 "$cache_table not cache table!"
 	exit 1
 fi
