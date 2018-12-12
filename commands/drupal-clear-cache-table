@@ -1,13 +1,15 @@
 #!/bin/bash
 # 23.02.2015
 # v0.1
+#12.12.2018 - added records parameter
 
 SCRIPT_HELP="
 Cleans cache_ table and optimize it.
 Delete only expired cache.
 
 Usage:
-       {0} cache_table_name
+       {0} cache_table_name N
+			 - N=records (default 5000), if N=0 removes all records
 
 Options:
        -v Verbose mode"
@@ -16,7 +18,7 @@ Options:
 
 check_drupal
 
-if [ $# != 1 ]; then
+if [ $# -lt 1 ]; then
 	usage
 	exit 1
 fi
@@ -27,13 +29,25 @@ if [ -z $(echo "$cache_table" | grep "^cache") ]; then
 	exit 1
 fi
 
-count=$(drs sql "SELECT COUNT(*) FROM {${cache_table}} WHERE expire <> 0 AND expire < UNIX_TIMESTAMP()")
-
-if [ "$count" -ne 0 ]; then
-	drs sql "DELETE FROM {${cache_table}} WHERE expire <> 0 AND expire < UNIX_TIMESTAMP() LIMIT 10000"
-	drs sql "OPTIMIZE TABLE {${cache_table}}" > /dev/null
+if [ -z "$2" ]; then
+	limit=5000
+else 
+	limit="$2"
 fi
+if [ "$limit" -ne 0 ]; then
+	count=$(drs sql "SELECT COUNT(*) FROM {${cache_table}} WHERE expire <> 0 AND expire < UNIX_TIMESTAMP()")
+	if [ "$count" -ne 0 ]; then
+		drs sql "DELETE FROM {${cache_table}} WHERE expire <> 0 AND expire < UNIX_TIMESTAMP() LIMIT $limit"
+	fi
+else 
+	drs sql "DELETE FROM {${cache_table}}"
+fi
+drs sql "OPTIMIZE TABLE {${cache_table}}" > /dev/null
 
 if [ -n "$SCRIPT_VERBOSE" ]; then
-	echo >&2 "cleared $count rows from $cache_table"
+	if [ "$limit" -ne 0 ]; then
+		echo >&2 "cleared $count rows from $cache_table"
+	else
+		echo >&2 "removed all rows from $cache_table"
+	fi
 fi
