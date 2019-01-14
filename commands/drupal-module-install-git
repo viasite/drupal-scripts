@@ -3,7 +3,7 @@
 # v0.1
 
 SCRIPT_HELP="
-Install module, commit module to git.
+Install module, clean cache commit module to git.
 
 Usage:
        {0} module_name [git_comment]"
@@ -32,5 +32,6 @@ if [ $(drush pml --status=enabled --pipe | grep -cx "$module_name") = 1 ]; then
 fi
 
 drush en -y "$module_name" \
+	&& drush cc all \
 	&& git add "sites/all/modules/$module_name" \
 	&& git commit -m "$comment"
