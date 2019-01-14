@@ -1,0 +1,33 @@
+#!/bin/bash
+
+SCRIPT_HELP="
+Install reroute_email, enable and set defined email, then wait for test and uninstall module.
+
+Usage:
+       {0} e@mail"
+
+. $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
+set -eu
+
+check_drush
+check_drupal
+
+if [ $# = 0 ]; then
+	usage
+	exit 1
+fi
+
+email="$1"
+
+# install
+drush en -y reroute_email
+drush cc all
+drush vset reroute_email_enable 1
+drush vset reroute_email_address "$email"
+
+echo "Press Ctrl+C for exit and leave reroute_email enabled, or press any key for remove reroute_email"
+read -n 1
+
+# uninstall
+drs module-uninstall reroute_email
+drush cc all
