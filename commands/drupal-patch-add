@@ -4,7 +4,7 @@ SCRIPT_HELP="
 Add patch to /patches/ directory.
 
 Usage:
-       {0} (path_file|path_url)"
+       {0} project_name (path_file|path_url)"
 
 . $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/drupal-scripts-init
 
